@@ -27,11 +27,21 @@ public class App extends Application {
         
         reversi.mostrarTablero();
         
-        reversi.colocarFicha();
         
-        reversi.comprobarPosicionEscogida( 6, 4, 'N');
         
-         reversi.mostrarTablero();
+        
+        //coloca la ficha en x5 y4 si se puede, va bien creo
+        
+        
+        reversi.colocarFicha( 5, 4, 'N');
+        
+        
+        //coloca la ficha en x5 y4 si se puede, va bien creo
+        
+        
+        
+        
+        reversi.mostrarTablero();
         
     }
 

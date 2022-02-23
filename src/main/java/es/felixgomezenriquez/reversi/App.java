@@ -33,7 +33,7 @@ public class App extends Application {
         //coloca la ficha en x5 y4 si se puede, va bien creo
         
         
-        reversi.colocarFicha( 5, 4, 'N');
+        reversi.colocarFicha( 3, 2, 'N');
         
         
         //coloca la ficha en x5 y4 si se puede, va bien creo
@@ -42,7 +42,7 @@ public class App extends Application {
         
         
         reversi.mostrarTablero();
-        
+                
     }
 
     public static void main(String[] args) {

@@ -29,14 +29,11 @@ public class App extends Application {
         
         
         
+                
         
-        //coloca la ficha en x5 y4 si se puede, va bien creo
-        
-        
-        reversi.colocarFicha( 3, 2, 'N');
+        reversi.colocarFicha( 2, 4, 'N');
         
         
-        //coloca la ficha en x5 y4 si se puede, va bien creo
         
         
         

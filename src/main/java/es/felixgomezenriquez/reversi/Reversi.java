@@ -65,53 +65,155 @@ public class Reversi {
     
     
     public void colocarFicha(int columna,int fila,char jugador){
-    
+        
+        
+        //tablero[2][4]='N';
+
+        
+        
+        
         
         if(this.comprobarPosicionEscogida(columna, fila, jugador)==true){
             System.out.println("colocandoficha");
-            tablero[columna][fila]=jugador;
+           // tablero[columna][fila]=jugador;
             
             
             if(this.contadorPiezasRivalIzq>0){
                 
-                System.out.println("colocando fichas bucle a la izquierda");
-                for(int x=columna; x >= columna-contadorPiezasRivalIzq ; x--) {
-                    tablero[x][fila] = jugador;  
+                
+                
+                
+                if (tablero[columna-contadorPiezasRivalIzq-1][fila] == jugador) {
+                
+                    System.out.println("colocando fichas bucle a la izquierda");
+                    for (int x = columna; x >= columna - contadorPiezasRivalIzq; x--) {
+                        tablero[x][fila] = jugador;
+                    }
+                    
+                }else{
+
+                    System.out.println("Nose puede colocar hacia izquierda");
+
                 }
+                
 
                 
+                
+                
+                
             } else if (this.contadorPiezasRivalDer>0) {
-                System.out.println("colocando fichas bucle a la derecha");
-                for(int x=columna; x <= columna+contadorPiezasRivalDer ; x++) {
-                    tablero[x][fila] = jugador;  
+                
+                if (tablero[columna+contadorPiezasRivalDer+1][fila] == jugador) {
                     
+                    System.out.println("colocando fichas bucle a la derecha");
+                    for (int x = columna; x <= columna + contadorPiezasRivalDer; x++) {
+                        tablero[x][fila] = jugador;
+                    }
+                }else{
+
+                    System.out.println("Nose puede colocar hacia derecha");
+
                 }
                 
             } else if (this.contadorPiezasRivalAbajo>0) {
-                System.out.println("colocando fichas bucle hacia abajo");
-                for(int y=fila; y <= fila+contadorPiezasRivalAbajo ; y++) {
-                    tablero[columna][y] = jugador;  
+                
+                if (tablero[columna][fila+contadorPiezasRivalAbajo+1] == jugador) {
                     
+                    System.out.println("colocando fichas bucle hacia abajo");
+                    for (int y = fila; y <= fila + contadorPiezasRivalAbajo; y++) {
+                        tablero[columna][y] = jugador;
+
+                    }    
+
+                }else{
+
+                    System.out.println("Nose puede colocar hacia abajo");
+
                 }
                 
+                
+                
+                
+            }else if (this.contadorPiezasRivalArriba > 0) {
+                
+                
+                if (tablero[columna][fila-contadorPiezasRivalArriba-1] == jugador) {
+                    
+                    System.out.println("colocando fichas bucle hacia arriba");
+                    for (int y = fila; y >= fila - contadorPiezasRivalArriba; y--) {
+                        tablero[columna][y] = jugador;
+                    }    
+
+                }else{
+
+                    System.out.println("Nose puede colocar hacia arriba");
+
+                }
+                
+
+            }else if (this.contadorPiezasRivalDiagonal_1 > 0) {
+                
+                if (tablero
+                        [columna-contadorPiezasRivalDiagonal_1-1]
+                        [fila-contadorPiezasRivalDiagonal_1-1] == jugador) {
+                    System.out.println("colocando fichas bucle hacia Diagonal_1");
+                    int xDiagonal1_1 = columna;
+                    for (int y = fila; y >= fila - contadorPiezasRivalDiagonal_1; y--) {
+                        tablero[xDiagonal1_1][y] = jugador;
+                        xDiagonal1_1--;
+                    }
+
+                }else{
+                
+                    System.out.println("Nose puede colocar en diagonal1_1");
+                
+                }
+
+                
+
+            }else if (this.contadorPiezasRivalDiagonal_2 > 0) {
+                
+                if (tablero
+                        [columna+contadorPiezasRivalDiagonal_1+1]
+                        [fila+contadorPiezasRivalDiagonal_1+1] == jugador) {
+                    System.out.println("colocando fichas bucle hacia Diagonal_2");
+                    int xDiagonal1_2=columna;
+                    for (int y = fila; y <= fila + contadorPiezasRivalDiagonal_2; y++) {
+                        tablero[xDiagonal1_2][y] = jugador;
+                        xDiagonal1_2++;
+                    }
+                }else{
+                    
+                    System.out.println("Nose puede colocar en diagonal 1_2");
+                }
+
+            }else if (this.contadorPiezasRivalDiagona2_1 > 0) {
+                
+                ///////////////////////HCER ESTA DIAGONALLLL
+                if (tablero
+                        [columna+contadorPiezasRivalDiagonal_1+1]
+                        [fila+contadorPiezasRivalDiagonal_1+1] == jugador) {
+                    System.out.println("colocando fichas bucle hacia Diagona2_1");
+                int xDiagonal2_1=columna;
+                for (int y = fila; y <= fila + contadorPiezasRivalDiagona2_1; y++) {
+                    tablero[xDiagonal2_1][y] = jugador;
+                    xDiagonal2_1++;
+                }
+                }else{
+                    
+                    System.out.println("Nose puede colocar");
+                }
+                
+                //  -fila +columna
             }
-            
-            
-            
-            //Falta for hacia arriba y diagonales 
-            
-            
-            
-            
-            
-            
-            
-            
+
+        }else{
+            System.out.println("No se puede poner la ficha");
             
         }
         
 
-    }
+    } 
     
     
     public boolean  comprobarPosicionEscogida(int columna, int fila, char jugador){

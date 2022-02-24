@@ -16,10 +16,10 @@ public class Reversi {
     char[][] tablero;
    
     
-    final char JUGADOR1 = 'B';
-    final char JUGADOR2 = 'N';
+    static final char JUGADOR1 = 'B';
+    static final char JUGADOR2 = 'N';
     final char VACIO = '.';
-    char turnoJugador = JUGADOR1;
+    static char turnoJugador = JUGADOR1;
     
     int contadorPiezasRivalAbajo;
     int contadorPiezasRivalArriba;
@@ -66,17 +66,9 @@ public class Reversi {
     
     public void colocarFicha(int columna,int fila,char jugador){
         
-        
-        //tablero[2][4]='N';
 
-        
-        
-        
-        
         if(this.comprobarPosicionEscogida(columna, fila, jugador)==true){
             System.out.println("colocandoficha");
-           // tablero[columna][fila]=jugador;
-            
             
             if(this.contadorPiezasRivalIzq>0){
                 
@@ -92,7 +84,7 @@ public class Reversi {
                     
                 }else{
 
-                    System.out.println("Nose puede colocar hacia izquierda");
+                    System.out.println("No se puede colocar hacia izquierda");
 
                 }
                 
@@ -111,7 +103,7 @@ public class Reversi {
                     }
                 }else{
 
-                    System.out.println("Nose puede colocar hacia derecha");
+                    System.out.println("No se puede colocar hacia derecha");
 
                 }
                 
@@ -127,7 +119,7 @@ public class Reversi {
 
                 }else{
 
-                    System.out.println("Nose puede colocar hacia abajo");
+                    System.out.println("No se puede colocar hacia abajo");
 
                 }
                 
@@ -146,7 +138,7 @@ public class Reversi {
 
                 }else{
 
-                    System.out.println("Nose puede colocar hacia arriba");
+                    System.out.println("No se puede colocar hacia arriba");
 
                 }
                 
@@ -156,6 +148,7 @@ public class Reversi {
                 if (tablero
                         [columna-contadorPiezasRivalDiagonal_1-1]
                         [fila-contadorPiezasRivalDiagonal_1-1] == jugador) {
+                    
                     System.out.println("colocando fichas bucle hacia Diagonal_1");
                     int xDiagonal1_1 = columna;
                     for (int y = fila; y >= fila - contadorPiezasRivalDiagonal_1; y--) {
@@ -165,7 +158,7 @@ public class Reversi {
 
                 }else{
                 
-                    System.out.println("Nose puede colocar en diagonal1_1");
+                    System.out.println("No se puede colocar en diagonal1_1");
                 
                 }
 
@@ -176,6 +169,7 @@ public class Reversi {
                 if (tablero
                         [columna+contadorPiezasRivalDiagonal_1+1]
                         [fila+contadorPiezasRivalDiagonal_1+1] == jugador) {
+                    
                     System.out.println("colocando fichas bucle hacia Diagonal_2");
                     int xDiagonal1_2=columna;
                     for (int y = fila; y <= fila + contadorPiezasRivalDiagonal_2; y++) {
@@ -184,27 +178,49 @@ public class Reversi {
                     }
                 }else{
                     
-                    System.out.println("Nose puede colocar en diagonal 1_2");
+                    System.out.println("No se puede colocar en diagonal 1_2");
                 }
 
             }else if (this.contadorPiezasRivalDiagona2_1 > 0) {
                 
-                ///////////////////////HCER ESTA DIAGONALLLL
                 if (tablero
-                        [columna+contadorPiezasRivalDiagonal_1+1]
-                        [fila+contadorPiezasRivalDiagonal_1+1] == jugador) {
-                    System.out.println("colocando fichas bucle hacia Diagona2_1");
+                        [columna+contadorPiezasRivalDiagona2_1+1]
+                        [fila-contadorPiezasRivalDiagona2_1-1] == jugador) {
+                    
+                System.out.println("colocando fichas bucle hacia Diagona2_1");
                 int xDiagonal2_1=columna;
-                for (int y = fila; y <= fila + contadorPiezasRivalDiagona2_1; y++) {
+                
+                for (int y = fila; y >= fila - contadorPiezasRivalDiagona2_1; y--) {
                     tablero[xDiagonal2_1][y] = jugador;
                     xDiagonal2_1++;
+                    
                 }
                 }else{
                     
-                    System.out.println("Nose puede colocar");
+                    System.out.println("No se puede colocar");
                 }
                 
-                //  -fila +columna
+                
+            }else if (this.contadorPiezasRivalDiagona2_2 > 0) {
+                
+                if (tablero
+                        [columna-contadorPiezasRivalDiagona2_2-1]
+                        [fila+contadorPiezasRivalDiagona2_2+1] == jugador) {
+                    
+                System.out.println("colocando fichas bucle hacia Diagona2_2");
+                
+                int xDiagonal2_2=columna;
+                
+                for (int y = fila; y <= fila + contadorPiezasRivalDiagona2_2; y++) {
+                    tablero[xDiagonal2_2][y] = jugador;
+                    xDiagonal2_2--;
+                    
+                }
+                }else{
+                    
+                    System.out.println("No se puede colocar");
+                }
+                
             }
 
         }else{
@@ -411,11 +427,13 @@ public class Reversi {
     
     
 
-    public void cambiarTurnoJugador() {
+        static public boolean cambiarTurnoJugador() {
         if (turnoJugador == JUGADOR1) {
             turnoJugador = JUGADOR2;
+            return false;
         } else {
             turnoJugador = JUGADOR1;
+            return true;
         }
     }
 
@@ -424,6 +442,4 @@ public class Reversi {
 }
 
         
-        //PARA COMPROBAR LAS FICHAS Y COLOCARLAS DIVIDIR TABLERO EN filas y columnas como hizo javi dividiendo la x o y 
-        //del mouse entre el tam de la ficha
-         //metodo comprueba cada casilla haciendole un for para devolverte las casillas en las que puedes colocar
+       

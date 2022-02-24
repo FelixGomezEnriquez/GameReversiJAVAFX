@@ -2,7 +2,8 @@ package es.felixgomezenriquez.reversi;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -18,27 +19,49 @@ public class App extends Application {
         int tamXPantalla = 640;
         int tamYPantalla = 480;
         
-        Pane paneRoot = new Pane();
+        BorderPane paneRoot = new BorderPane();
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
         stage.setScene(scene);
         stage.show();
         
+        
+        
+        
         Reversi reversi=new Reversi();
         
-        reversi.mostrarTablero();
+        
+        Tablero tablero =new Tablero(reversi);
         
         
-        
-                
-        
-        reversi.colocarFicha( 2, 4, 'N');
-        
-        
+        paneRoot.setCenter(tablero);
         
         
         
         
-        reversi.mostrarTablero();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        reversi.mostrarTablero();
+//        
+//        
+//        
+//                
+//        
+//        reversi.colocarFicha( 5, 4, 'N');
+//        
+//        
+//        
+//        
+//        
+//        
+//        reversi.mostrarTablero();
                 
     }
 

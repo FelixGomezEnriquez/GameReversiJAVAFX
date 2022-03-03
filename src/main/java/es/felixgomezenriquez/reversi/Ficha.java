@@ -13,38 +13,25 @@ import javafx.scene.shape.Circle;
  *
  * @author usuario
  */
-public class Ficha extends Group{
+public class Ficha extends Circle{
     
     
     static final double TAM_FICHA = 40;
-    double posX;
-    double posY;
     
     
-    public Ficha(){
-        
-        if (Reversi.cambiarTurnoJugador()==true) {
-            
-            Circle blanco=new Circle();
-        
-            blanco.setRadius(TAM_FICHA/2);
-            blanco.setFill(Color.WHITE);
-            
-        } else {
-            
-            Circle negro=new Circle();
+    
+    public Ficha(char jugador){
 
-            negro.setRadius(TAM_FICHA/2);
-            negro.setFill(Color.BLACK);
+        if (jugador == 'N') {
+            this.setRadius(TAM_FICHA/2);
+            this.setFill(Color.BLACK);
+        }else{
+            this.setRadius(TAM_FICHA/2);
+            this.setFill(Color.WHITESMOKE);
+
         
         }
-        
-        //False es jugador 2 true es jugador 1
-        
-        //
-        
-    
-        
+
     }
     
 }

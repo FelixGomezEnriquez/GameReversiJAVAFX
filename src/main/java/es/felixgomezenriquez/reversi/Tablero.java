@@ -93,49 +93,148 @@ public class Tablero extends Pane{
     public void colocarFicha(){
     
         this.setOnMouseClicked((event) -> {
-                columna=(int)(event.getX()/Ficha.TAM_FICHA);
-                fila=(int)(event.getY()/ Ficha.TAM_FICHA);
-            if (Reversi.cambiarTurnoJugador()==Reversi.JUGADOR1 
-                    && reversi.colocarFicha(columna, fila, 'N') ){
+            System.out.println("ESTAMOS CLIKANDO");
+            columna = (int) (event.getX() / Ficha.TAM_FICHA);
+            fila = (int) (event.getY() / Ficha.TAM_FICHA);
+            System.out.println("El turno es de: "+ reversi.cambiarTurnoJugador());
+            
+            if (reversi.cambiarTurnoJugador() == Reversi.JUGADOR1
+                    && reversi.colocarFicha(columna, fila, 'N')) { 
                 
-                Ficha ficha=new Ficha('N');
-                ficha.setCenterX(columna * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
-                ficha.setCenterY(fila *Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
-                this.getChildren().add(ficha);
+                System.out.println("Turno de JUGADOR 1");                
+                this.ganarFichas(columna, fila, 'N');
+                reversi.cambiarTurnoJugador();
                 reversi.mostrarTablero();
-                //Reversi.cambiarTurnoJugador();
+                
+                
+            }  else if(reversi.cambiarTurnoJugador() == 'B'
+                    && reversi.colocarFicha(columna, fila, 'B')){
+                
+                System.out.println("Turno de JUGADOR 2");
+                this.ganarFichas(columna, fila, 'B');
+                reversi.cambiarTurnoJugador();
+                reversi.mostrarTablero();
+            }
+        });
+
+    }
+
+    public void ganarFichas(int columna , int fila, char jugador){
+        
+        if (reversi.contadorPiezasRivalIzq > 0 && 
+                reversi.tablero[columna - reversi.contadorPiezasRivalIzq - 1][fila] == jugador) {
+            System.out.println("colocando fichas grafico bucle a la izquierda");
+            for (int x = columna; x >= columna - reversi.contadorPiezasRivalIzq; x--) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(x * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(fila * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+
+            }
+        } 
+        
+        if (reversi.contadorPiezasRivalDer > 0 && 
+                reversi.tablero[columna + reversi.contadorPiezasRivalDer + 1][fila] == jugador) {
+
+            System.out.println("colocando fichas bucle a la derecha");
+            for (int x = columna; x <= columna + reversi.contadorPiezasRivalDer; x++) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(x * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(fila * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+            }
+
+        }
+        
+        if (reversi.contadorPiezasRivalAbajo > 0 
+                && reversi.tablero[columna][fila + reversi.contadorPiezasRivalAbajo + 1] == jugador) {
+
+            for (int y = fila; y <= fila + reversi.contadorPiezasRivalAbajo; y++) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(columna * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+            }
+        }
+        
+        if (reversi.contadorPiezasRivalArriba > 0 
+                && reversi.tablero[columna][fila - reversi.contadorPiezasRivalArriba - 1] == jugador) {
+
+            for (int y = fila; y >= fila - reversi.contadorPiezasRivalArriba; y--) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(columna * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+            }
+
+        }
+        
+        if (reversi.contadorPiezasRivalDiagonal_1>0 
+                && reversi.tablero[columna - reversi.contadorPiezasRivalDiagonal_1 - 1]
+                [fila - reversi.contadorPiezasRivalDiagonal_1 - 1] == jugador){
+        
+            int xDiagonal1_1 = columna;
+            for (int y = fila; y >= fila - reversi.contadorPiezasRivalDiagonal_1; y--) {
+                
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(xDiagonal1_1 * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+                xDiagonal1_1--;
                 
             }
-//                
-//            } else if (Reversi.cambiarTurnoJugador()== Reversi.JUGADOR2
-                    //&& reversi.colocarFicha(columna, fila, 'B')){
-//                System.out.println("esta es la x: "+event.getX());
-//                System.out.println("esta es la Y: "+event.getY());
-//                System.out.println(columna);
-//                System.out.println(fila);
-//                Ficha ficha=new Ficha('B');
-//                ficha.setCenterX(columna * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
-//                ficha.setCenterY(fila *Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
-//                this.getChildren().add(ficha);
-//                reversi.mostrarTablero();
-//                Reversi.cambiarTurnoJugador();
-//                
-//            }
-            
-            
-        });
-    
-    
-    }
-    
-    public void ganarFichas(){
+        }
         
-        //CREAR FOR PARA convertir fichas rivales al color del jugador
+        if (reversi.contadorPiezasRivalDiagonal_2>0 &&
+                reversi.tablero[columna + reversi.contadorPiezasRivalDiagonal_2 + 1]
+                [fila + reversi.contadorPiezasRivalDiagonal_2 + 1] == jugador){
+            
+            int xDiagonal1_2 = columna;
+            for (int y = fila; y <= fila + reversi.contadorPiezasRivalDiagonal_2; y++) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(xDiagonal1_2 * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+                xDiagonal1_2++;
+            }
+        
+        }
+        
+        if (reversi.contadorPiezasRivalDiagona2_1>0 && 
+                reversi.tablero[columna + reversi.contadorPiezasRivalDiagona2_1 + 1]
+                [fila - reversi.contadorPiezasRivalDiagona2_1 - 1] == jugador){
+            
+            int xDiagonal2_1 = columna;
+
+            for (int y = fila; y >= fila - reversi.contadorPiezasRivalDiagona2_1; y--) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(xDiagonal2_1 * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+                xDiagonal2_1++;
+            }
+        
+        }
+        
+        if (reversi.contadorPiezasRivalDiagona2_2>0 
+                && reversi.tablero[columna - reversi.contadorPiezasRivalDiagona2_2 - 1]
+                [fila + reversi.contadorPiezasRivalDiagona2_2 + 1] == jugador){
+            
+            int xDiagonal2_2 = columna;
+
+            for (int y = fila; y <= fila + reversi.contadorPiezasRivalDiagona2_2; y++) {
+                Ficha ficha = new Ficha(jugador);
+                ficha.setCenterX(xDiagonal2_2 * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                ficha.setCenterY(y * Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
+                this.getChildren().add(ficha);
+                xDiagonal2_2--;
+
+            }
+        
+        }
         
     }
-
-
-    //metodo comprueba cada casilla haciendole un for para devolverte las casillas en las que puedes colocar
-    
-    
 }
+
+
+            

@@ -124,7 +124,7 @@ public class Tablero extends Pane{
     public void ganarFichas(int columna , int fila, char jugador){
         
         if (reversi.contadorPiezasRivalIzq > 0 && 
-                reversi.tablero[columna - reversi.contadorPiezasRivalIzq - 1][fila] == jugador) {
+                reversi.tablero[reversi.posXFinalIzq][fila] == jugador) {
             System.out.println("colocando fichas grafico bucle a la izquierda");
             for (int x = columna; x >= columna - reversi.contadorPiezasRivalIzq; x--) {
                 Ficha ficha = new Ficha(jugador);
@@ -136,7 +136,7 @@ public class Tablero extends Pane{
         } 
         
         if (reversi.contadorPiezasRivalDer > 0 && 
-                reversi.tablero[columna + reversi.contadorPiezasRivalDer + 1][fila] == jugador) {
+                reversi.tablero[reversi.posXFinalDer][fila] == jugador) {
 
             System.out.println("colocando fichas grafico bucle a la derecha");
             for (int x = columna; x <= columna + reversi.contadorPiezasRivalDer; x++) {
@@ -149,7 +149,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalAbajo > 0 
-                && reversi.tablero[columna][fila + reversi.contadorPiezasRivalAbajo + 1] == jugador) {
+                && reversi.tablero[columna][reversi.posYFinalAbajo] == jugador) {
 
             System.out.println("colocando fichas grafico bucle a la abajo");
 
@@ -162,7 +162,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalArriba > 0 
-                && reversi.tablero[columna][fila - reversi.contadorPiezasRivalArriba - 1] == jugador) {
+                && reversi.tablero[columna][reversi.posYFinalArriba] == jugador) {
             System.out.println("colocando fichas grafico bucle arriba");
 
             for (int y = fila; y >= fila - reversi.contadorPiezasRivalArriba; y--) {
@@ -175,8 +175,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalDiagonal_1>0 
-                && reversi.tablero[columna - reversi.contadorPiezasRivalDiagonal_1 - 1]
-                [fila - reversi.contadorPiezasRivalDiagonal_1 - 1] == jugador){
+                && reversi.tablero[reversi.posXFinalD1_1][reversi.posYFinalD1_1] == jugador){
 
             System.out.println("colocando fichas grafico bucle Diagonal1_1");
 
@@ -193,8 +192,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalDiagonal_2>0 &&
-                reversi.tablero[columna + reversi.contadorPiezasRivalDiagonal_2 + 1]
-                [fila + reversi.contadorPiezasRivalDiagonal_2 + 1] == jugador){
+                reversi.tablero[reversi.posXFinalD1_2][reversi.posYFinalD1_2] == jugador){
             System.out.println("colocando fichas grafico bucle Diagonal1_2");
             int xDiagonal1_2 = columna;
             for (int y = fila; y <= fila + reversi.contadorPiezasRivalDiagonal_2; y++) {
@@ -208,8 +206,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalDiagona2_1>0 && 
-                reversi.tablero[columna + reversi.contadorPiezasRivalDiagona2_1 + 1]
-                [fila - reversi.contadorPiezasRivalDiagona2_1 - 1] == jugador){
+                reversi.tablero[reversi.posXFinalD2_1][reversi.posYFinalD2_1] == jugador){
             System.out.println("colocando fichas grafico bucle Diagonal2_1");
             int xDiagonal2_1 = columna;
 
@@ -224,8 +221,7 @@ public class Tablero extends Pane{
         }
         
         if (reversi.contadorPiezasRivalDiagona2_2>0 
-                && reversi.tablero[columna - reversi.contadorPiezasRivalDiagona2_2 - 1]
-                [fila + reversi.contadorPiezasRivalDiagona2_2 + 1] == jugador){
+                && reversi.tablero[reversi.posXFinalD2_2][reversi.posYFinalD2_2] == jugador){
             System.out.println("colocando fichas grafico bucle Diagonal2_2");
             int xDiagonal2_2 = columna;
 

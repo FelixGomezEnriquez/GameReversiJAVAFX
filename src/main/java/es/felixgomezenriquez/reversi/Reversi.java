@@ -61,56 +61,54 @@ public class Reversi {
     }
 
     public boolean colocarFicha(int columna, int fila, char jugador) {
+        
+        boolean seHaColocado=false;
 
-        if (this.comprobarPosicionEscogida(columna, fila, jugador) == true) {
+        if ( this.comprobarPosicionEscogida(columna, fila, jugador) == true) {
             System.out.println("colocando ficha: " + jugador);
 
-            if (this.contadorPiezasRivalIzq > 0) {
-
-                if (tablero[columna - contadorPiezasRivalIzq - 1][fila] == jugador) {
+            if (this.contadorPiezasRivalIzq > 0 
+                && tablero[columna - contadorPiezasRivalIzq - 1][fila] == jugador) {
 
                     System.out.println("colocando fichas bucle a la izquierda");
                     for (int x = columna; x >= columna - contadorPiezasRivalIzq; x--) {
                         tablero[x][fila] = jugador;
                     }
-                    return true;// NO deja seguir las com`probaciones del metodo
-
+                    seHaColocado=true;
                 } else {
 
                     System.out.println("No se puede colocar hacia izquierda");
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalDer > 0) {
-
-                if (tablero[columna + contadorPiezasRivalDer + 1][fila] == jugador) {
+            if (this.contadorPiezasRivalDer > 0 
+                    && tablero[columna + contadorPiezasRivalDer + 1][fila] == jugador) {
 
                     System.out.println("colocando fichas bucle a la derecha");
                     for (int x = columna; x <= columna + contadorPiezasRivalDer; x++) {
                         tablero[x][fila] = jugador;
                     }
 
-                    return true;
+                    seHaColocado=true;
 
                 } else {
 
                     System.out.println("No se puede colocar a la derecha");
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalAbajo > 0) {
-
-                if (tablero[columna][fila + contadorPiezasRivalAbajo + 1] == jugador) {
+            if (this.contadorPiezasRivalAbajo > 0 
+                    && tablero[columna][fila + contadorPiezasRivalAbajo + 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia abajo");
                     for (int y = fila; y <= fila + contadorPiezasRivalAbajo; y++) {
                         tablero[columna][y] = jugador;
 
                     }
-                    return true;
+                    seHaColocado=true;
 
                 } else {
 
@@ -118,29 +116,28 @@ public class Reversi {
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalArriba > 0) {
-
-                if (tablero[columna][fila - contadorPiezasRivalArriba - 1] == jugador) {
+            if (this.contadorPiezasRivalArriba > 0 
+                    && tablero[columna][fila - contadorPiezasRivalArriba - 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia arriba");
                     for (int y = fila; y >= fila - contadorPiezasRivalArriba; y--) {
                         tablero[columna][y] = jugador;
                     }
-                    return true;
-
+                    seHaColocado=true;
+                    
                 } else {
 
                     System.out.println("No se puede colocar hacia arriba");
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalDiagonal_1 > 0) {
-
-                if (tablero[columna - contadorPiezasRivalDiagonal_1 - 1][fila - contadorPiezasRivalDiagonal_1 - 1] == jugador) {
+            if (this.contadorPiezasRivalDiagonal_1 > 0 
+                    &&tablero[columna - contadorPiezasRivalDiagonal_1 - 1]
+                    [fila - contadorPiezasRivalDiagonal_1 - 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia Diagonal_1");
                     int xDiagonal1_1 = columna;
@@ -148,7 +145,7 @@ public class Reversi {
                         tablero[xDiagonal1_1][y] = jugador;
                         xDiagonal1_1--;
                     }
-                    return true;
+                    seHaColocado=true;
 
                 } else {
 
@@ -156,12 +153,11 @@ public class Reversi {
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalDiagonal_2 > 0) {
-                
-                
-                if (tablero[columna + contadorPiezasRivalDiagonal_2 + 1][fila + contadorPiezasRivalDiagonal_2 + 1] == jugador) {
+            if (this.contadorPiezasRivalDiagonal_2 > 0 
+                    &&tablero[columna + contadorPiezasRivalDiagonal_2 + 1]
+                    [fila + contadorPiezasRivalDiagonal_2 + 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia Diagonal_2");
                     int xDiagonal1_2 = columna;
@@ -169,18 +165,19 @@ public class Reversi {
                         tablero[xDiagonal1_2][y] = jugador;
                         xDiagonal1_2++;
                     }
-                    return true;
+                    seHaColocado=true;
+                    
                 } else {
 
                     System.out.println("No se puede colocar en diagonal 1_2");
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalDiagona2_1 > 0) {
-
-                if (tablero[columna + contadorPiezasRivalDiagona2_1 + 1][fila - contadorPiezasRivalDiagona2_1 - 1] == jugador) {
+            if (this.contadorPiezasRivalDiagona2_1 > 0 
+                    &&tablero[columna + contadorPiezasRivalDiagona2_1 + 1]
+                    [fila - contadorPiezasRivalDiagona2_1 - 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia Diagona2_1");
                     int xDiagonal2_1 = columna;
@@ -189,19 +186,19 @@ public class Reversi {
                         tablero[xDiagonal2_1][y] = jugador;
                         xDiagonal2_1++;
                     }
-                    return true;
+                    seHaColocado=true;
 
                 } else {
 
-                    System.out.println("No se puede colocar");
+                    System.out.println("No se puede colocar en diagonal 2_1");
 
                 }
 
-            }
+            
 
-            if (this.contadorPiezasRivalDiagona2_2 > 0) {
-
-                if (tablero[columna - contadorPiezasRivalDiagona2_2 - 1][fila + contadorPiezasRivalDiagona2_2 + 1] == jugador) {
+            if (this.contadorPiezasRivalDiagona2_2 > 0 
+                    &&tablero[columna - contadorPiezasRivalDiagona2_2 - 1]
+                    [fila + contadorPiezasRivalDiagona2_2 + 1] == jugador) {
 
                     System.out.println("colocando fichas bucle hacia Diagona2_2");
 
@@ -212,20 +209,23 @@ public class Reversi {
                         xDiagonal2_2--;
 
                     }
-                    return true;
+                    
+                    seHaColocado=true;
+                    
                 } else {
 
-                    System.out.println("No se puede colocar");
+                    System.out.println("No se puede colocaren diagonal 2_2");
 
                 }
 
-            }
-        } else if (this.comprobarPosicionEscogida(columna, fila, jugador) == false) {
-            System.out.println("No se puede poner la ficha");
+        }else{
             return false;
         }
-
-        return false;
+        if (seHaColocado==true){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean comprobarPosicionEscogida(int columna, int fila, char jugador) {
@@ -251,7 +251,7 @@ public class Reversi {
 
         contadorPiezasRivalDer = 0;
         int posDer = 1;
-        while (columna + posDer < tamXTablero && tablero[columna + posDer][fila] != VACIO) {
+        while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
 
             if (tablero[columna + posDer][fila] == jugador) {
                 System.out.println("Las piezas del rival a la derecha hasta el jugador:" + jugador + " son:" + contadorPiezasRivalDer);
@@ -283,7 +283,7 @@ public class Reversi {
 
         contadorPiezasRivalAbajo = 0;
         int posAba = 1;
-        while (fila + posAba < tamYTablero && tablero[columna][fila + posAba] != VACIO) {
+        while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
 
             if (tablero[columna][fila + posAba] == jugador) {
                 System.out.println("Las piezas del rival hacia abajo hasta jugador " + jugador + " son:" + contadorPiezasRivalAbajo);
@@ -345,7 +345,10 @@ public class Reversi {
         contadorPiezasRivalDiagona2_1 = 0;
         int posD2_1 = 1;
 
-        while (fila - posD2_1 == 0 && columna + posD2_1 == 7 && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
+        while (fila - posD2_1 >= 0 && columna + posD2_1 < 8 
+                && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
+            
+            System.out.println("posiciones array D2_1: "+tablero[columna+posD2_1][fila-posD2_1]);
 
             if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
                 System.out.println("Las piezas del rival diagonal 2_1 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagona2_1);
@@ -370,7 +373,8 @@ public class Reversi {
         contadorPiezasRivalDiagona2_2 = 0;
         int posD2_2 = 1;
 
-        while (fila + posD2_2 == 7 && columna - posD2_2 == 0 && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
+        while (fila + posD2_2 <= 7 && columna - posD2_2 >= 0 
+                && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
 
             if (tablero[columna - posD2_2][fila + posD2_2] == jugador) {
                 System.out.println("Las piezas del rival diagonal 2_2 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagona2_2);
@@ -394,6 +398,10 @@ public class Reversi {
                 Hacia abajo
 
          */
+        
+        //El error viene dado porq al comprobar aqui en el if la siguiente posicion por si es vacio se sale
+        //Probar borrando la otra comprobacion de tablero[][] porq creo q se hace dble comprobacion y
+        //aqui no seria necesario
         if (contadorPiezasRivalAbajo > 0 && tablero[columna][fila + posAba] != VACIO
                 || contadorPiezasRivalArriba > 0 && tablero[columna][fila - posArr] != VACIO
                 || contadorPiezasRivalDer > 0 && tablero[columna + posDer][fila] != VACIO

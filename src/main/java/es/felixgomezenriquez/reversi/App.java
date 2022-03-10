@@ -33,6 +33,8 @@ public class App extends Application {
         Tablero tablero =new Tablero(reversi);
         tablero.colocarFicha();
         
+        
+        
         paneRoot.setCenter(tablero);
         
         

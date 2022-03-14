@@ -33,10 +33,15 @@ public class App extends Application {
         Tablero tablero =new Tablero(reversi);
         tablero.colocarFicha();
         
+        PanelPuntos puntos=new PanelPuntos();
         
-        
+                
         paneRoot.setCenter(tablero);
         
+        paneRoot.setLeft(puntos);
+
+        
+
         
         
         

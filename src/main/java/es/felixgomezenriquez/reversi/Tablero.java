@@ -19,7 +19,7 @@ import javafx.scene.shape.Line;
  */
 public class Tablero extends Pane{
     
-    
+    PanelPuntos panelPuntos= new PanelPuntos();
     Reversi reversi;
     int columna;
     int fila;
@@ -106,6 +106,11 @@ public class Tablero extends Pane{
                 System.out.println("Turno de JUGADOR 1");                
                 this.ganarFichas(columna, fila, Reversi.JUGADOR1);
                 reversi.cambiarTurnoJugador();
+                
+                
+                PanelPuntos.fichasBlancas.setText("Blancas: " +
+                        panelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi));
+                
                 reversi.mostrarTablero();
                 
                 
@@ -115,6 +120,11 @@ public class Tablero extends Pane{
                 System.out.println("Turno de JUGADOR 2");
                 this.ganarFichas(columna, fila, Reversi.JUGADOR2);
                 reversi.cambiarTurnoJugador();
+                
+                
+                PanelPuntos.fichasNegras.setText("Negras: " +
+                        panelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi));
+
                 reversi.mostrarTablero();
             }
         });

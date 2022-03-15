@@ -74,7 +74,7 @@ public class PanelPuntos extends StackPane{
     }
     
     
-    public int cambiarPuntuacion( char jugador, Reversi reversi){
+    static public int cambiarPuntuacion( char jugador, Reversi reversi){
         
         int numFichasJugador=0;
 

@@ -19,7 +19,7 @@ import javafx.scene.shape.Line;
  */
 public class Tablero extends Pane{
     
-    PanelPuntos panelPuntos= new PanelPuntos();
+    
     Reversi reversi;
     int columna;
     int fila;
@@ -32,7 +32,8 @@ public class Tablero extends Pane{
     final int COLUMNAINICIAL4=4;
     final int FILAINICIAL4=4;
     
-    
+    static int numFichasBlancas;
+    static int numFichasNegras;
     
     public Tablero( Reversi reversi){
         
@@ -108,9 +109,12 @@ public class Tablero extends Pane{
                 reversi.cambiarTurnoJugador();
                 
                 
-                PanelPuntos.fichasBlancas.setText("Blancas: " +
-                        panelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi));
+                //Uso variable que contenga el resultado de el metodo cambiar puntuacion
+                // para usar ese resultado en la logica y ver quien gana
                 
+                numFichasBlancas=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi);
+                PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);
+                quienGana();
                 reversi.mostrarTablero();
                 
                 
@@ -121,14 +125,12 @@ public class Tablero extends Pane{
                 this.ganarFichas(columna, fila, Reversi.JUGADOR2);
                 reversi.cambiarTurnoJugador();
                 
-                
-                PanelPuntos.fichasNegras.setText("Negras: " +
-                        panelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi));
-
+                numFichasNegras=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi);
+                PanelPuntos.fichasNegras.setText("Negras: " + numFichasNegras);
+                quienGana();              
                 reversi.mostrarTablero();
             }
         });
-
     }
 
     public void ganarFichas(int columna , int fila, char jugador){
@@ -247,6 +249,22 @@ public class Tablero extends Pane{
         }
         
     }
+
+    
+    public void quienGana(){
+        
+        if(reversi.victoria()=='N'){
+            
+            System.out.println("HA ganado NEGRO");
+        }else if (reversi.victoria()=='B'){
+            System.out.println("HA ganado Blanco");
+        }else{
+            System.out.println("No ha ganado nadie");
+        }
+    
+    }
+    
+
 }
 
 

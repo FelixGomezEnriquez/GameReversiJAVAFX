@@ -34,12 +34,14 @@ public class App extends Application {
         tablero.colocarFicha();
         
         PanelPuntos puntos=new PanelPuntos();
+        PanelMensajes mensajes=new PanelMensajes();
         
                 
         paneRoot.setCenter(tablero);
         
         paneRoot.setLeft(puntos);
-
+        
+        paneRoot.setRight(mensajes);
         
 
         

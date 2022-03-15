@@ -332,7 +332,8 @@ public class Reversi {
         while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
 
             if (tablero[columna - posIzq][fila] == jugador) {
-                System.out.println("Las piezas del rival a la izquierda hasta el jugador " + jugador + " son:" + contadorPiezasRivalIzq);
+                System.out.println("Las piezas del rival a la izquierda hasta el jugador "+ 
+                        jugador + " son:" + contadorPiezasRivalIzq);
 
                 break;
             } else {
@@ -349,7 +350,8 @@ public class Reversi {
         while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
 
             if (tablero[columna + posDer][fila] == jugador) {
-                System.out.println("Las piezas del rival a la derecha hasta el jugador:" + jugador + " son:" + contadorPiezasRivalDer);
+                System.out.println("Las piezas del rival a la derecha hasta el jugador:" + 
+                        jugador + " son:" + contadorPiezasRivalDer);
                 break;
             } else {
                 contadorPiezasRivalDer++;
@@ -365,7 +367,8 @@ public class Reversi {
             System.out.println("fila-pos yendo parriba" + (fila - posArr));
 
             if (tablero[columna][fila - posArr] == jugador) {
-                System.out.println("Las piezas del rival  hacia arrriba hasta jugador:" + jugador + " son:" + contadorPiezasRivalArriba);
+                System.out.println("Las piezas del rival  hacia arrriba hasta jugador:" + 
+                        jugador + " son:" + contadorPiezasRivalArriba);
 
                 break;
             } else {
@@ -381,7 +384,8 @@ public class Reversi {
         while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
 
             if (tablero[columna][fila + posAba] == jugador) {
-                System.out.println("Las piezas del rival hacia abajo hasta jugador " + jugador + " son:" + contadorPiezasRivalAbajo);
+                System.out.println("Las piezas del rival hacia abajo hasta jugador " + 
+                        jugador + " son:" + contadorPiezasRivalAbajo);
                 break;
             } else {
                 contadorPiezasRivalAbajo++;
@@ -397,7 +401,8 @@ public class Reversi {
         while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
 
             if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
-                System.out.println("Las piezas del rival diagonal 1_1 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagonal_1);
+                System.out.println("Las piezas del rival diagonal 1_1 hasta jugador " +
+                        jugador + " son:" + contadorPiezasRivalDiagonal_1);
                 break;
             } else {
                 contadorPiezasRivalDiagonal_1++;
@@ -524,4 +529,66 @@ public class Reversi {
         }
     }
 
+    
+    public boolean movPosibles(char jugador){
+        
+        int movPosibles=0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if(comprobarPosicionEscogida(i, j,jugador)==true){
+                    movPosibles++;
+//                }else {
+//                       movPosibles--;   
+                }
+            }
+            
+        }
+        if (movPosibles>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    
+    public char victoria (){
+        
+        if (movPosibles(JUGADOR1)== false && 
+                movPosibles(JUGADOR2)==false &&
+                Tablero.numFichasBlancas>Tablero.numFichasNegras){
+            return 'B';
+        }else if (movPosibles(JUGADOR1)== false && 
+                movPosibles(JUGADOR2)==false &&
+                Tablero.numFichasBlancas<Tablero.numFichasNegras){
+            return 'N';
+        }else{
+            return '.';
+        }
+    }
+    
+//    public char victoria(){
+//        
+//        
+//        if (conteoPiezas()==true) {
+//            
+//            if (Tablero.numFichasBlancas>Tablero.numFichasNegras){
+//                
+//                System.out.println("Han ganado las blancas");
+//                return 'B';
+//            } else if (Tablero.numFichasNegras>Tablero.numFichasBlancas){
+//                
+//                System.out.println("Han ganado las negras");
+//                return 'N';
+//            }
+//            
+//            
+//            
+//        }else{
+//            System.out.println("No se dan las condiciones para decidir la victoria");
+//            return '.';
+//        }
+//        return '.';
+//        
+//    }
+    
 }

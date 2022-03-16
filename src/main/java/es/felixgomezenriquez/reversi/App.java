@@ -1,9 +1,9 @@
 package es.felixgomezenriquez.reversi;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -23,7 +23,7 @@ public class App extends Application {
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
         stage.setScene(scene);
         stage.show();
-        
+        paneRoot.setPadding(new Insets(10));
         
         
         
@@ -31,7 +31,7 @@ public class App extends Application {
         
         
         Tablero tablero =new Tablero(reversi);
-        tablero.colocarFicha();
+        
         
         PanelPuntos puntos=new PanelPuntos();
         PanelMensajes mensajes=new PanelMensajes();
@@ -41,7 +41,10 @@ public class App extends Application {
         
         paneRoot.setLeft(puntos);
         
-        paneRoot.setRight(mensajes);
+        paneRoot.setBottom(mensajes);
+        
+        
+        
         
 
         

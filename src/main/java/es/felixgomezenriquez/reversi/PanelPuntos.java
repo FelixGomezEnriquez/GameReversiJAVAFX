@@ -6,6 +6,10 @@
 package es.felixgomezenriquez.reversi;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -28,14 +32,19 @@ public class PanelPuntos extends StackPane{
     
     public PanelPuntos (){
         
-        //this.setAlignment(Pos.BASELINE_LEFT);
-        this.setMinHeight(100);
-        this.setMaxHeight(200);
+
+        this.setAlignment(Pos.CENTER);
+        
+        CornerRadii cornerradii=new CornerRadii(50);
+        
+        this.setBackground(new Background(
+            new BackgroundFill(Color.FORESTGREEN, cornerradii, Insets.EMPTY)));
+        
+        this.setPadding(new Insets(20));
         
         VBox puntos =new VBox();
-        puntos.setPadding(new Insets(20));
-        puntos.setSpacing(20);
-       
+        puntos.setSpacing(10);
+        puntos.setAlignment(Pos.CENTER);
         
         numFichas.setText("Numero de fichas");
         numFichas.setFont(Font.font(20));

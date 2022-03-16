@@ -537,17 +537,12 @@ public class Reversi {
             for (int j = 0; j < 8; j++) {
                 if(comprobarPosicionEscogida(i, j,jugador)==true){
                     movPosibles++;
-//                }else {
-//                       movPosibles--;   
+ 
                 }
             }
             
         }
-        if (movPosibles>0){
-            return true;
-        }else{
-            return false;
-        }
+        return movPosibles>0;
     }
     
     
@@ -566,29 +561,6 @@ public class Reversi {
         }
     }
     
-//    public char victoria(){
-//        
-//        
-//        if (conteoPiezas()==true) {
-//            
-//            if (Tablero.numFichasBlancas>Tablero.numFichasNegras){
-//                
-//                System.out.println("Han ganado las blancas");
-//                return 'B';
-//            } else if (Tablero.numFichasNegras>Tablero.numFichasBlancas){
-//                
-//                System.out.println("Han ganado las negras");
-//                return 'N';
-//            }
-//            
-//            
-//            
-//        }else{
-//            System.out.println("No se dan las condiciones para decidir la victoria");
-//            return '.';
-//        }
-//        return '.';
-//        
-//    }
+
     
 }

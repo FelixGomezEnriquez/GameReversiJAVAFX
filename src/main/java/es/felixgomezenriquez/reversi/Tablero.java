@@ -83,7 +83,7 @@ public class Tablero extends Pane{
         fichaB2.setCenterY(FILAINICIAL4 *Ficha.TAM_FICHA + Ficha.TAM_FICHA / 2);
         this.getChildren().add(fichaB2);
         
-                
+        colocarFicha();
         
         
  
@@ -94,40 +94,49 @@ public class Tablero extends Pane{
     public void colocarFicha(){
     
         this.setOnMouseClicked((event) -> {
+            
             System.out.println("ESTAMOS CLICKANDO");
             columna = (int) (event.getX() / Ficha.TAM_FICHA);
             fila = (int) (event.getY() / Ficha.TAM_FICHA);
             System.out.println("El turno es de: "+ reversi.turnoJugador);
-            System.out.println("x:"+columna);
-            System.out.println("y:"+fila);
+            compruebaCondiciones();
+
             
             if (reversi.turnoJugador == Reversi.JUGADOR1
                     && reversi.colocarFicha(columna, fila, Reversi.JUGADOR1)) { 
                 
-                System.out.println("Turno de JUGADOR 1");                
+                System.out.println("Turno de JUGADOR 1");
+                
+                PanelMensajes.mostrarMensaje("Es turno de las piezas negras");
+                
                 this.ganarFichas(columna, fila, Reversi.JUGADOR1);
+                
+                
                 reversi.cambiarTurnoJugador();
                 
+                renovarPuntos();
                 
-                //Uso variable que contenga el resultado de el metodo cambiar puntuacion
-                // para usar ese resultado en la logica y ver quien gana
-                
-                numFichasBlancas=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi);
-                PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);
                 quienGana();
-                reversi.mostrarTablero();
                 
+                reversi.mostrarTablero();
                 
             }  else if(reversi.turnoJugador == Reversi.JUGADOR2
                     && reversi.colocarFicha(columna, fila, Reversi.JUGADOR2)){
                 
                 System.out.println("Turno de JUGADOR 2");
+                
                 this.ganarFichas(columna, fila, Reversi.JUGADOR2);
+                
+                
                 reversi.cambiarTurnoJugador();
                 
-                numFichasNegras=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi);
-                PanelPuntos.fichasNegras.setText("Negras: " + numFichasNegras);
+                //Muestra por pantalla el turno del siguiente jugador
+                PanelMensajes.mostrarMensaje("Es turno de las piezas blancas");
+
+                renovarPuntos();
+                
                 quienGana();              
+                
                 reversi.mostrarTablero();
             }
         });
@@ -249,21 +258,62 @@ public class Tablero extends Pane{
         }
         
     }
+    
+    
+    public void renovarPuntos(){
+        
+        //Uso variable que contenga el resultado de el metodo cambiar puntuacion
+        // para usar ese resultado en la logica y ver quien gana
+                
+        numFichasBlancas=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi);
+        PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);
+        
+        numFichasNegras=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi);
+        PanelPuntos.fichasNegras.setText("Negras: " + numFichasNegras);
+    
+        
+    }
 
     
     public void quienGana(){
         
-        if(reversi.victoria()=='N'){
-            
-            System.out.println("HA ganado NEGRO");
-        }else if (reversi.victoria()=='B'){
-            System.out.println("HA ganado Blanco");
-        }else{
-            System.out.println("No ha ganado nadie");
+        switch (reversi.victoria()) {
+            case 'N':
+                System.out.println("HA ganado NEGRO");
+                PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS NEGRAS");
+                
+                break;
+            case 'B':
+                System.out.println("HA ganado Blanco");
+                PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS BLANCAS");
+                break;
+            default:
+                System.out.println("No ha ganado nadie");
+                break;
         }
     
     }
     
+    public void compruebaCondiciones(){
+    
+        if(reversi.movPosibles(Reversi.JUGADOR1)==true &&
+                reversi.movPosibles(Reversi.JUGADOR2)==false){
+            PanelMensajes.mostrarMensaje("Las negras no tienen movimientos posibles, pasan turno");
+            reversi.turnoJugador=Reversi.JUGADOR1;
+            
+        }else if(reversi.movPosibles(Reversi.JUGADOR1)==false &&
+            reversi.movPosibles(Reversi.JUGADOR2)==true){
+            
+            PanelMensajes.mostrarMensaje("Las Blancas no tienen movimientos posibles, pasan turno");
+            reversi.turnoJugador=Reversi.JUGADOR2;
+        }
+        
+    
+    }
+    
+    
+    //METODO pasar turno porq no tienes movimientos
+
 
 }
 

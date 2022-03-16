@@ -5,12 +5,14 @@
  */
 package es.felixgomezenriquez.reversi;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -19,28 +21,27 @@ import javafx.util.Duration;
 public class PanelMensajes extends StackPane{
 
     static Label labelMensaje = new Label();
-    final static byte TIEMPO_MENSAJE = 5;
-
     
     public PanelMensajes(){
-    
-    //this.setAlignment(Pos.BASELINE_LEFT);
+        
+        CornerRadii cornerradii=new CornerRadii(50);
+        
+        this.setPadding(new Insets(20));
+        this.setBackground(new Background(
+            new BackgroundFill(Color.FORESTGREEN, cornerradii, Insets.EMPTY)));
         this.setMinHeight(100);
         this.setMaxHeight(200);
         this.getChildren().add(labelMensaje);
+        labelMensaje.setFont(new Font("Arial", 15));
+        labelMensaje.setText("Aqui apareceran mensajes de ayuda");
     }
     
     public static void mostrarMensaje(String mensaje) {
         labelMensaje.setText(mensaje);
-        Timeline timelineMensaje = new Timeline(
-            new KeyFrame(Duration.seconds(TIEMPO_MENSAJE), (ActionEvent t) -> {
-                labelMensaje.setText("");
-        })
-        );
-        timelineMensaje.setCycleCount(1);
-        timelineMensaje.play();
     }
      
+    
+    
 
   
     

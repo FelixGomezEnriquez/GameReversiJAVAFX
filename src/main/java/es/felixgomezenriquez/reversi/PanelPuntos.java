@@ -5,8 +5,10 @@
  */
 package es.felixgomezenriquez.reversi;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -22,16 +24,16 @@ import javafx.scene.text.Text;
  */
 public class PanelPuntos extends StackPane{
     
+    Reversi reversi;
     
-   static Text fichasBlancas = new Text();
-    
+    static Text fichasBlancas = new Text();
     
     static Text fichasNegras = new Text();
 
     
-    public PanelPuntos (){
+    public PanelPuntos (Reversi reversi, Tablero tablero){
         
-
+        this.reversi=reversi;
         this.setAlignment(Pos.CENTER);
         
         CornerRadii cornerradii=new CornerRadii(50);
@@ -73,13 +75,7 @@ public class PanelPuntos extends StackPane{
         //Anadimos los textos al layout
         puntos.getChildren().add(fichasNegras);
     
-        
-        
         this.getChildren().add(puntos);
-        
-
-
-    
     }
     
     

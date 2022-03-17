@@ -39,16 +39,12 @@ public class App extends Application {
         Tablero tablero =new Tablero(reversi);
         
         
-        PanelPuntos puntos=new PanelPuntos();
+        PanelPuntos puntos=new PanelPuntos(reversi,tablero);
         PanelMensajes mensajes=new PanelMensajes();
         
                 
         paneRoot.setCenter(tablero);
-        
-        //para quitar que te diga por rastreo tantas veces lo mismo hacer metodo comprobar
-        //posicion escogida sin verbose y llamar a ese metodo en reversi.movposibles 
-        //y en tablero.compruebacondiciones
-        
+                
         paneRoot.setLeft(puntos);
         
         paneRoot.setBottom(mensajes);

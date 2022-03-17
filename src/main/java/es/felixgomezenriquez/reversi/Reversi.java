@@ -21,6 +21,10 @@ public class Reversi {
     static final char JUGADOR2 = 'N';
     final char VACIO = '.';
     char turnoJugador = JUGADOR1;
+    //Variables que controlan si tiene movimientos posibles o no 
+    
+//    boolean movJugadorBlanco;
+//    boolean movJugadorNegro;
 
     //Variables que almacenan la cantidad de piezas del rival que hay entre 2 piezas aliadas
     int contadorPiezasRivalAbajo;
@@ -525,13 +529,13 @@ public class Reversi {
         }
     }
 
-    
+        
     public boolean movPosibles(char jugador){
         
         int movPosibles=0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(comprobarPosicionEscogidaSinConsola(i, j,jugador)==true && tablero[i][j]== '.'){
+                if(tablero[i][j]==VACIO && comprobarPosicionEscogidaSinConsola(i, j,jugador)==true){
                     movPosibles++;
  
                 }
@@ -544,8 +548,8 @@ public class Reversi {
     
     public char victoria (){
         
-        boolean movJugadorBlanco=movPosibles(Reversi.JUGADOR1);
-        boolean movJugadorNegro=movPosibles(Reversi.JUGADOR2);
+        boolean movJugadorBlanco=this.movPosibles(Reversi.JUGADOR1);
+        boolean movJugadorNegro=this.movPosibles(Reversi.JUGADOR2);
         
         System.out.println("VALOR LOGICO MOV JUGADOR BLANCO METODO VICTORIA"+ movJugadorBlanco);
         System.out.println("VALOR LOGICO MOV JUGADOR NEGRO METODO VICTORIA"+ movJugadorNegro);
@@ -558,217 +562,308 @@ public class Reversi {
                 movJugadorNegro==false &&
                 Tablero.numFichasBlancas<Tablero.numFichasNegras){
             return 'N';
+        }else if (movJugadorBlanco==true && movJugadorNegro==false){
+            return 'H';
+        }else if (movJugadorBlanco ==false && movJugadorNegro==true){
+            return 'U';
         }else{
             return '.';
         }
     }
     
 
-    public void compruebaCondicionesPasarTurno(){
+
+    public boolean comprobarPosicionEscogidaSinConsola(int columna, int fila, char jugador) 
+    {
+
+
+        //Para no poder pinchar en una ficha ya puesta _-------------------------------
+        if(tablero[columna][fila]!=VACIO){
+            return false;
+        }
+
         
-        System.out.println("Comprobando condiciones pasar turno");
-        boolean movJugadorBlanco=movPosibles(JUGADOR1);
-        boolean movJugadorNegro=movPosibles(JUGADOR2);
+        contadorPiezasRivalIzq = 0;
+        // Recuento a la izquierda
+        int posIzq = 1;
+        //Mientras la columna menos la pos sea mayor o igual a 0 y la siguiente posicion sea distinto de vacio
+        while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
 
+            if (tablero[columna - posIzq][fila] == jugador) {
+                
 
-        System.out.println("VALOR LOGICO DE mov JUGADOR BLANCO: " + movJugadorBlanco);
-        System.out.println("VALOR LOGICO DE mov JUGADOR NEGRO: " + movJugadorNegro);
-        //PROBAR PIEZAS DE RIVAL
-        if(movJugadorBlanco==true && movJugadorNegro==false){
+                break;
+            } else {
+                contadorPiezasRivalIzq++;
+            }
+            posIzq++;
 
-            PanelMensajes.mostrarMensaje("Las negras no tienen movimientos posibles, pasan turno");
-            turnoJugador=Reversi.JUGADOR1;
-
-        }else if(movJugadorBlanco ==false && movJugadorNegro==true){
-
-            PanelMensajes.mostrarMensaje("Las Blancas no tienen movimientos posibles, pasan turno");
-            turnoJugador=Reversi.JUGADOR2;
         }
-    }
-    
-    
-    
-    
-    public boolean comprobarPosicionEscogidaSinConsola(int columna, int fila, char jugador) {
-
-    //Para no poder pinchar en una ficha ya puesta _-------------------------------
-    if(tablero[columna][fila]!=VACIO){
-        return false;
-    }
 
 
-    contadorPiezasRivalIzq = 0;
-    // Recuento a la izquierda
-    int posIzq = 1;
-    //Mientras la columna menos la pos sea mayor o igual a 0 y la siguiente posicion sea distinto de vacio
-    while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
+        contadorPiezasRivalDer = 0;
+        int posDer = 1;
+        while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
 
-        if (tablero[columna - posIzq][fila] == jugador) {
-
-
-            break;
-        } else {
-            contadorPiezasRivalIzq++;
+            if (tablero[columna + posDer][fila] == jugador) {
+                
+                break;
+            } else {
+                contadorPiezasRivalDer++;
+            }
+            posDer++;
         }
-        posIzq++;
-
-    }
 
 
-    contadorPiezasRivalDer = 0;
-    int posDer = 1;
-    while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
+        contadorPiezasRivalArriba = 0;
+        int posArr = 1;
+        while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
+            
+            if (tablero[columna][fila - posArr] == jugador) {
+                
 
-        if (tablero[columna + posDer][fila] == jugador) {
-
-            break;
-        } else {
-            contadorPiezasRivalDer++;
+                break;
+            } else {
+                contadorPiezasRivalArriba++;
+            }
+            posArr++;
         }
-        posDer++;
-    }
 
 
-    contadorPiezasRivalArriba = 0;
-    int posArr = 1;
-    while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
+        contadorPiezasRivalAbajo = 0;
+        int posAba = 1;
+        while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
 
-        if (tablero[columna][fila - posArr] == jugador) {
-
-
-            break;
-        } else {
-            contadorPiezasRivalArriba++;
+            if (tablero[columna][fila + posAba] == jugador) {
+              
+                break;
+            } else {
+                contadorPiezasRivalAbajo++;
+            }
+            posAba++;
         }
-        posArr++;
-    }
 
 
-    contadorPiezasRivalAbajo = 0;
-    int posAba = 1;
-    while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
+        contadorPiezasRivalDiagonal_1 = 0;
+        int posD1_1 = 1;
 
-        if (tablero[columna][fila + posAba] == jugador) {
+        while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
 
-            break;
-        } else {
-            contadorPiezasRivalAbajo++;
+            if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
+               
+                break;
+            } else {
+                contadorPiezasRivalDiagonal_1++;
+            }
+            posD1_1++;
         }
-        posAba++;
-    }
 
 
-    contadorPiezasRivalDiagonal_1 = 0;
-    int posD1_1 = 1;
+        /*      /
+                /
+                    /   
+                        /
+        esta es diagonal 1_1 HACIA ARRIBA
+         */
+        contadorPiezasRivalDiagonal_2 = 0;
+        int posD1_2 = 1;
 
-    while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
+        while (fila + posD1_2 < 8 && columna + posD1_2 < 8 && tablero[columna + posD1_2][fila + posD1_2] != VACIO) {
 
-        if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
-
-            break;
-        } else {
-            contadorPiezasRivalDiagonal_1++;
+            if (tablero[columna + posD1_2][fila + posD1_2] == jugador) {
+                break;
+            } else {
+                contadorPiezasRivalDiagonal_2++;
+            }
+            posD1_2++;
         }
-        posD1_1++;
-    }
 
 
-    /*      /
-            /
-                /   
-                    /
-    esta es diagonal 1_1 HACIA ARRIBA
-     */
-    contadorPiezasRivalDiagonal_2 = 0;
-    int posD1_2 = 1;
-
-    while (fila + posD1_2 < 8 && columna + posD1_2 < 8 && tablero[columna + posD1_2][fila + posD1_2] != VACIO) {
-
-        if (tablero[columna + posD1_2][fila + posD1_2] == jugador) {
-            break;
-        } else {
-            contadorPiezasRivalDiagonal_2++;
-        }
-        posD1_2++;
-    }
-
-
-    /*
-        \
+        /*
             \
                 \
                     \
+                        \
+            
+            HACIA ABAJO
+         */
+        contadorPiezasRivalDiagona2_1 = 0;
+        int posD2_1 = 1;
 
-        HACIA ABAJO
-     */
-    contadorPiezasRivalDiagona2_1 = 0;
-    int posD2_1 = 1;
-
-    while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
-            && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
+        while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
+                && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
 
 
-        if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
-            break;
-        } else {
-            contadorPiezasRivalDiagona2_1++;
+            if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
+                break;
+            } else {
+                contadorPiezasRivalDiagona2_1++;
+            }
+            posD2_1++;
         }
-        posD2_1++;
-    }
 
 
-    /*
-
-
+        /*
+            
+            
+                        /
                     /
                 /
             /
-        /
-    HACIA ARRIBA
-     */
-    contadorPiezasRivalDiagona2_2 = 0;
-    int posD2_2 = 1;
+        HACIA ARRIBA
+         */
+        contadorPiezasRivalDiagona2_2 = 0;
+        int posD2_2 = 1;
 
-    while (fila + posD2_2 <= 7 && columna - posD2_2 >= 0
-            && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
+        while (fila + posD2_2 <= 7 && columna - posD2_2 >= 0
+                && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
 
-        if (tablero[columna - posD2_2][fila + posD2_2] == jugador) {
-            break;
-        } else {
-            contadorPiezasRivalDiagona2_2++;
+            if (tablero[columna - posD2_2][fila + posD2_2] == jugador) {
+                break;
+            } else {
+                contadorPiezasRivalDiagona2_2++;
+            }
+            posD2_2++;
         }
-        posD2_2++;
-    }
 
 
-    /*
-
-
+        /*
+            
+            
+                        /
                     /
                 /
             /
-        /
+        
+                Hacia abajo
 
-            Hacia abajo
+         */
+        
+        
+        
+        posXFinalIzq = columna - contadorPiezasRivalIzq - 1;
+        
+         if (posXFinalIzq <= 0) {
+                posXFinalIzq = 0;
+            }
 
-     */
+            
 
-    if (contadorPiezasRivalAbajo > 0
-            || contadorPiezasRivalArriba > 0
-            || contadorPiezasRivalDer > 0
-            || contadorPiezasRivalIzq > 0
-            || contadorPiezasRivalDiagonal_1 > 0
-            || contadorPiezasRivalDiagonal_2 > 0
-            || contadorPiezasRivalDiagona2_1 > 0
-            || contadorPiezasRivalDiagona2_2 > 0) {
+ 
+            posXFinalDer = columna + contadorPiezasRivalDer + 1;
 
-        return true;    //Devuelve verdadero, significa que se puede colocar una pieza
-    } else {
+            if (posXFinalDer >= 7) {
+                posXFinalDer = 7;
+            }
 
-        return false; //Devuelve falso no se puede colocar ninguna pieza
+                   
+
+            posYFinalAbajo = fila + contadorPiezasRivalAbajo + 1;
+
+            if (posYFinalAbajo >= 7) {
+                posYFinalAbajo = 7;
+            }
+
+
+            posYFinalArriba = fila - contadorPiezasRivalArriba - 1;
+
+            if (posYFinalArriba <= 0) {
+                posYFinalArriba = 0;
+            }
+
+            
+
+            posXFinalD1_1 = columna - contadorPiezasRivalDiagonal_1 - 1;
+            posYFinalD1_1 = fila - contadorPiezasRivalDiagonal_1 - 1;
+
+            if (posXFinalD1_1 <= 0) {
+                posXFinalD1_1 = 0;
+            }
+
+            if (posYFinalD1_1 <= 0) {
+                posYFinalD1_1 = 0;
+            }
+
+           
+            posXFinalD1_2 = columna + contadorPiezasRivalDiagonal_2 + 1;
+            posYFinalD1_2 = fila + contadorPiezasRivalDiagonal_2 + 1;
+
+            if (posXFinalD1_2 >= 7) {
+                posXFinalD1_2 = 7;
+            }
+
+            if (posYFinalD1_2 >= 7) {
+                posYFinalD1_2 = 7;
+            }
+
+     
+
+
+            posXFinalD2_1 = columna + contadorPiezasRivalDiagona2_1 + 1;
+            posYFinalD2_1 = fila - contadorPiezasRivalDiagona2_1 - 1;
+
+            if (posXFinalD2_1 >= 7) {
+                posXFinalD2_1 = 7;
+            }
+
+            if (posYFinalD2_1 <= 0) {
+                posYFinalD2_1 = 0;
+            }
+
+          
+ 
+
+            posXFinalD2_2 = columna - contadorPiezasRivalDiagona2_2 - 1;
+            posYFinalD2_2 = fila + contadorPiezasRivalDiagona2_2 + 1;
+
+            if (posXFinalD2_2 <= 0) {
+                posXFinalD2_2 = 0;
+            }
+
+            if (posYFinalD2_2 >= 7) {
+                posYFinalD2_2 = 7;
+            }
+
+
+        
+        
+        if (contadorPiezasRivalAbajo > 0 && tablero[columna][posYFinalAbajo] == jugador
+                || contadorPiezasRivalArriba > 0 && tablero[columna][posYFinalArriba] == jugador
+                || contadorPiezasRivalDer > 0 && tablero[posXFinalDer][fila] == jugador
+                || (contadorPiezasRivalIzq > 0 &&  tablero[posXFinalIzq][fila] == jugador)
+                || contadorPiezasRivalDiagonal_1 > 0 && tablero[posXFinalD1_1][posYFinalD1_1] == jugador
+                || contadorPiezasRivalDiagonal_2 > 0 && tablero[posXFinalD1_2][posYFinalD1_2] == jugador
+                || contadorPiezasRivalDiagona2_1 > 0 && tablero[posXFinalD2_1][posYFinalD2_1] == jugador
+                || contadorPiezasRivalDiagona2_2 > 0 && tablero[posXFinalD2_2][posYFinalD2_2] == jugador) {
+
+            return true;    //Devuelve verdadero, significa que se puede colocar una pieza
+        } else {
+
+            return false; //Devuelve falso no se puede colocar ninguna pieza
+        }
+        
     }
+    
 
-}
 
+
+public void resetLogica(){
+        
+        
+        for (int x = 0; x < tamXTablero; x++) {
+            for (int y = 0; y < tamYTablero; y++) {
+                tablero[x][y] = VACIO;
+            }
+        }
+        //Colocamos las fichas iniciales
+        tablero[3][3] = 'B';
+        tablero[4][3] = 'N';
+        tablero[4][4] = 'B';
+        tablero[3][4] = 'N';        
+        turnoJugador=JUGADOR1;      
+        
+        
+        
+    }
     
 }

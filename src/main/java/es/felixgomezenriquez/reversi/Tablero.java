@@ -5,6 +5,10 @@
  */
 package es.felixgomezenriquez.reversi;
 
+import static es.felixgomezenriquez.reversi.Reversi.JUGADOR1;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -12,6 +16,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 /**
  *
@@ -36,6 +41,7 @@ public class Tablero extends Pane{
     static int numFichasNegras;
     
     public Tablero( Reversi reversi){
+        
         
         this.reversi=reversi;
          this.setBackground(new Background(
@@ -100,9 +106,9 @@ public class Tablero extends Pane{
             fila = (int) (event.getY() / Ficha.TAM_FICHA);
             System.out.println("El turno es de: "+ reversi.turnoJugador);
             
-            reversi.compruebaCondicionesPasarTurno();
+            this.quienGana();
+
             
-     
             if (reversi.turnoJugador == Reversi.JUGADOR1
                     && reversi.colocarFicha(columna, fila, Reversi.JUGADOR1)) { 
                 
@@ -112,11 +118,10 @@ public class Tablero extends Pane{
                 
                 this.ganarFichas(columna, fila, Reversi.JUGADOR1);
                 
-                
+
                 reversi.cambiarTurnoJugador();
                 
                 renovarPuntos();
-                this.quienGana();
 
                 
                 reversi.mostrarTablero();
@@ -129,16 +134,17 @@ public class Tablero extends Pane{
                 this.ganarFichas(columna, fila, Reversi.JUGADOR2);
                 
                 
+
                 reversi.cambiarTurnoJugador();
                 
                 //Muestra por pantalla el turno del siguiente jugador
                 PanelMensajes.mostrarMensaje("Es turno de las piezas blancas");
-
+                
                 this.renovarPuntos();
-                this.quienGana();
                 reversi.mostrarTablero();
             } else{
                 PanelMensajes.mostrarMensaje("Movimiento inválido");
+                
             }
         });
     }
@@ -288,6 +294,16 @@ public class Tablero extends Pane{
                 System.out.println("HA ganado Blanco");
                 PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS BLANCAS");
                 break;
+            case 'H':
+                PanelMensajes.mostrarMensaje("Negras sin movimientos, pasan turno a las blancas");
+                reversi.turnoJugador=Reversi.JUGADOR1;
+                break;
+            case 'U':
+                PanelMensajes.mostrarMensaje("Blancas sin movimientos, pasan turno a las negras");
+                reversi.turnoJugador=Reversi.JUGADOR2;
+        
+                break;
+                
             default:
                 System.out.println("No ha ganado nadie");
                 break;
@@ -296,6 +312,7 @@ public class Tablero extends Pane{
     }
     
     
+     
 }
 
 

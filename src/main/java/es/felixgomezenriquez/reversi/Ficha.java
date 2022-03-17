@@ -26,7 +26,7 @@ public class Ficha extends Circle{
             this.setFill(Color.BLACK);
         }else{
             this.setRadius(TAM_FICHA/2);
-            this.setFill(Color.WHITESMOKE);
+            this.setFill(Color.WHITE);
 
         
         }

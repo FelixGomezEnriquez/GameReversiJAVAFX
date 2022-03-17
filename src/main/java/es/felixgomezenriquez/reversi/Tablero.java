@@ -99,7 +99,7 @@ public class Tablero extends Pane{
             columna = (int) (event.getX() / Ficha.TAM_FICHA);
             fila = (int) (event.getY() / Ficha.TAM_FICHA);
             System.out.println("El turno es de: "+ reversi.turnoJugador);
-            compruebaCondiciones();
+            //compruebaCondiciones();
 
             
             if (reversi.turnoJugador == Reversi.JUGADOR1

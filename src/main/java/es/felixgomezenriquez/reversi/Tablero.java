@@ -99,9 +99,10 @@ public class Tablero extends Pane{
             columna = (int) (event.getX() / Ficha.TAM_FICHA);
             fila = (int) (event.getY() / Ficha.TAM_FICHA);
             System.out.println("El turno es de: "+ reversi.turnoJugador);
-            //compruebaCondiciones();
-
             
+            reversi.compruebaCondicionesPasarTurno();
+            
+     
             if (reversi.turnoJugador == Reversi.JUGADOR1
                     && reversi.colocarFicha(columna, fila, Reversi.JUGADOR1)) { 
                 
@@ -115,8 +116,8 @@ public class Tablero extends Pane{
                 reversi.cambiarTurnoJugador();
                 
                 renovarPuntos();
-                
-                quienGana();
+                this.quienGana();
+
                 
                 reversi.mostrarTablero();
                 
@@ -133,11 +134,11 @@ public class Tablero extends Pane{
                 //Muestra por pantalla el turno del siguiente jugador
                 PanelMensajes.mostrarMensaje("Es turno de las piezas blancas");
 
-                renovarPuntos();
-                
-                quienGana();              
-                
+                this.renovarPuntos();
+                this.quienGana();
                 reversi.mostrarTablero();
+            } else{
+                PanelMensajes.mostrarMensaje("Movimiento inválido");
             }
         });
     }
@@ -294,32 +295,7 @@ public class Tablero extends Pane{
     
     }
     
-    public void compruebaCondiciones(){
     
-        System.out.println("tiene el blanco "
-                + "movimientos posibles?"+ reversi.movPosibles(Reversi.JUGADOR1));
-        
-        System.out.println("tiene el negro "
-                + "movimientos posibles?"+ reversi.movPosibles(Reversi.JUGADOR2));
-        if(reversi.movPosibles(Reversi.JUGADOR1)==true &&
-                reversi.movPosibles(Reversi.JUGADOR2)==false){
-            PanelMensajes.mostrarMensaje("Las negras no tienen movimientos posibles, pasan turno");
-            reversi.turnoJugador=Reversi.JUGADOR1;
-            
-        }else if(reversi.movPosibles(Reversi.JUGADOR1)==false &&
-            reversi.movPosibles(Reversi.JUGADOR2)==true){
-            
-            PanelMensajes.mostrarMensaje("Las Blancas no tienen movimientos posibles, pasan turno");
-            reversi.turnoJugador=Reversi.JUGADOR2;
-        }
-        
-    
-    }
-    
-    
-    //METODO pasar turno porq no tienes movimientos
-
-
 }
 
 

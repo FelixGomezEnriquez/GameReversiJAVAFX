@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,7 +34,7 @@ public class PanelMensajes extends StackPane{
         this.setMaxHeight(200);
         this.getChildren().add(labelMensaje);
         labelMensaje.setFont(new Font("Arial", 22));
-        labelMensaje.setText("Aqui apareceran mensajes de ayuda");
+        labelMensaje.setText("Primer turno de blancas");
     }
     
     public static void mostrarMensaje(String mensaje) {

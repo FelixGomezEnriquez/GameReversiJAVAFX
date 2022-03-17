@@ -25,13 +25,11 @@ public class PanelPuntos extends StackPane{
     
    static Text fichasBlancas = new Text();
     
-    Text numFichas = new Text();
     
     static Text fichasNegras = new Text();
 
     
     public PanelPuntos (){
-        
         
 
         this.setAlignment(Pos.CENTER);
@@ -40,14 +38,14 @@ public class PanelPuntos extends StackPane{
         
         this.setBackground(new Background(
             new BackgroundFill(Color.GAINSBORO, cornerradii, Insets.EMPTY)));
-       
-
+        
         this.setPadding(new Insets(20));
         
         VBox puntos =new VBox();
         puntos.setSpacing(10);
         puntos.setAlignment(Pos.CENTER);
         
+        Text numFichas = new Text();
         numFichas.setText("Numero de fichas");
         numFichas.setFont(Font.font(20));
         numFichas.setFill(Color.BLACK);
@@ -61,7 +59,7 @@ public class PanelPuntos extends StackPane{
         fichasBlancas.setText("Blancas: 0");
         fichasBlancas.setFont(Font.font(15));
         fichasBlancas.setFill(Color.rgb(219, 123, 0));
-        //219, 123, 0 naranja
+        
 
         //Anadimos los textos al layout
         puntos.getChildren().add(fichasBlancas);
@@ -104,5 +102,4 @@ public class PanelPuntos extends StackPane{
 }
    
     
-
 

@@ -229,7 +229,6 @@ public class Reversi {
                 posYFinalD1_2 = 7;
             }
 
-            System.out.println("posicion tablero D1_2:  " + tablero[posXFinalD1_2][posYFinalD1_2]);
             if (this.contadorPiezasRivalDiagonal_2 > 0
                     && tablero[posXFinalD1_2][posYFinalD1_2] == jugador) {
 
@@ -325,6 +324,7 @@ public class Reversi {
             return false;
         }
 
+        
         contadorPiezasRivalIzq = 0;
         // Recuento a la izquierda
         int posIzq = 1;
@@ -364,8 +364,7 @@ public class Reversi {
         contadorPiezasRivalArriba = 0;
         int posArr = 1;
         while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
-            System.out.println("fila-pos yendo parriba" + (fila - posArr));
-
+            
             if (tablero[columna][fila - posArr] == jugador) {
                 System.out.println("Las piezas del rival  hacia arrriba hasta jugador:" + 
                         jugador + " son:" + contadorPiezasRivalArriba);
@@ -448,7 +447,6 @@ public class Reversi {
         while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
                 && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
 
-            System.out.println("posiciones array D2_1: " + tablero[columna + posD2_1][fila - posD2_1]);
 
             if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
                 System.out.println("Las piezas del rival diagonal 2_1 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagona2_1);
@@ -498,9 +496,7 @@ public class Reversi {
                 Hacia abajo
 
          */
-        //El error viene dado porq al comprobar aqui en el if la siguiente posicion por si es vacio se sale
-        //Probar borrando la otra comprobacion de tablero[][] porq creo q se hace dble comprobacion y
-        //aqui no seria necesario
+        
         if (contadorPiezasRivalAbajo > 0
                 || contadorPiezasRivalArriba > 0
                 || contadorPiezasRivalDer > 0
@@ -535,7 +531,7 @@ public class Reversi {
         int movPosibles=0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(comprobarPosicionEscogida(i, j,jugador)==true){
+                if(comprobarPosicionEscogidaSinConsola(i, j,jugador)==true && tablero[i][j]== '.'){
                     movPosibles++;
  
                 }
@@ -548,12 +544,18 @@ public class Reversi {
     
     public char victoria (){
         
-        if (movPosibles(JUGADOR1)== false && 
-                movPosibles(JUGADOR2)==false &&
+        boolean movJugadorBlanco=movPosibles(Reversi.JUGADOR1);
+        boolean movJugadorNegro=movPosibles(Reversi.JUGADOR2);
+        
+        System.out.println("VALOR LOGICO MOV JUGADOR BLANCO METODO VICTORIA"+ movJugadorBlanco);
+        System.out.println("VALOR LOGICO MOV JUGADOR NEGRO METODO VICTORIA"+ movJugadorNegro);
+        
+        if (movJugadorBlanco== false && 
+                movJugadorNegro==false &&
                 Tablero.numFichasBlancas>Tablero.numFichasNegras){
             return 'B';
-        }else if (movPosibles(JUGADOR1)== false && 
-                movPosibles(JUGADOR2)==false &&
+        }else if (movJugadorBlanco== false && 
+                movJugadorNegro==false &&
                 Tablero.numFichasBlancas<Tablero.numFichasNegras){
             return 'N';
         }else{
@@ -561,6 +563,212 @@ public class Reversi {
         }
     }
     
+
+    public void compruebaCondicionesPasarTurno(){
+        
+        System.out.println("Comprobando condiciones pasar turno");
+        boolean movJugadorBlanco=movPosibles(JUGADOR1);
+        boolean movJugadorNegro=movPosibles(JUGADOR2);
+
+
+        System.out.println("VALOR LOGICO DE mov JUGADOR BLANCO: " + movJugadorBlanco);
+        System.out.println("VALOR LOGICO DE mov JUGADOR NEGRO: " + movJugadorNegro);
+        //PROBAR PIEZAS DE RIVAL
+        if(movJugadorBlanco==true && movJugadorNegro==false){
+
+            PanelMensajes.mostrarMensaje("Las negras no tienen movimientos posibles, pasan turno");
+            turnoJugador=Reversi.JUGADOR1;
+
+        }else if(movJugadorBlanco ==false && movJugadorNegro==true){
+
+            PanelMensajes.mostrarMensaje("Las Blancas no tienen movimientos posibles, pasan turno");
+            turnoJugador=Reversi.JUGADOR2;
+        }
+    }
+    
+    
+    
+    
+    public boolean comprobarPosicionEscogidaSinConsola(int columna, int fila, char jugador) {
+
+    //Para no poder pinchar en una ficha ya puesta _-------------------------------
+    if(tablero[columna][fila]!=VACIO){
+        return false;
+    }
+
+
+    contadorPiezasRivalIzq = 0;
+    // Recuento a la izquierda
+    int posIzq = 1;
+    //Mientras la columna menos la pos sea mayor o igual a 0 y la siguiente posicion sea distinto de vacio
+    while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
+
+        if (tablero[columna - posIzq][fila] == jugador) {
+
+
+            break;
+        } else {
+            contadorPiezasRivalIzq++;
+        }
+        posIzq++;
+
+    }
+
+
+    contadorPiezasRivalDer = 0;
+    int posDer = 1;
+    while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
+
+        if (tablero[columna + posDer][fila] == jugador) {
+
+            break;
+        } else {
+            contadorPiezasRivalDer++;
+        }
+        posDer++;
+    }
+
+
+    contadorPiezasRivalArriba = 0;
+    int posArr = 1;
+    while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
+
+        if (tablero[columna][fila - posArr] == jugador) {
+
+
+            break;
+        } else {
+            contadorPiezasRivalArriba++;
+        }
+        posArr++;
+    }
+
+
+    contadorPiezasRivalAbajo = 0;
+    int posAba = 1;
+    while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
+
+        if (tablero[columna][fila + posAba] == jugador) {
+
+            break;
+        } else {
+            contadorPiezasRivalAbajo++;
+        }
+        posAba++;
+    }
+
+
+    contadorPiezasRivalDiagonal_1 = 0;
+    int posD1_1 = 1;
+
+    while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
+
+        if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
+
+            break;
+        } else {
+            contadorPiezasRivalDiagonal_1++;
+        }
+        posD1_1++;
+    }
+
+
+    /*      /
+            /
+                /   
+                    /
+    esta es diagonal 1_1 HACIA ARRIBA
+     */
+    contadorPiezasRivalDiagonal_2 = 0;
+    int posD1_2 = 1;
+
+    while (fila + posD1_2 < 8 && columna + posD1_2 < 8 && tablero[columna + posD1_2][fila + posD1_2] != VACIO) {
+
+        if (tablero[columna + posD1_2][fila + posD1_2] == jugador) {
+            break;
+        } else {
+            contadorPiezasRivalDiagonal_2++;
+        }
+        posD1_2++;
+    }
+
+
+    /*
+        \
+            \
+                \
+                    \
+
+        HACIA ABAJO
+     */
+    contadorPiezasRivalDiagona2_1 = 0;
+    int posD2_1 = 1;
+
+    while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
+            && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
+
+
+        if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
+            break;
+        } else {
+            contadorPiezasRivalDiagona2_1++;
+        }
+        posD2_1++;
+    }
+
+
+    /*
+
+
+                    /
+                /
+            /
+        /
+    HACIA ARRIBA
+     */
+    contadorPiezasRivalDiagona2_2 = 0;
+    int posD2_2 = 1;
+
+    while (fila + posD2_2 <= 7 && columna - posD2_2 >= 0
+            && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
+
+        if (tablero[columna - posD2_2][fila + posD2_2] == jugador) {
+            break;
+        } else {
+            contadorPiezasRivalDiagona2_2++;
+        }
+        posD2_2++;
+    }
+
+
+    /*
+
+
+                    /
+                /
+            /
+        /
+
+            Hacia abajo
+
+     */
+
+    if (contadorPiezasRivalAbajo > 0
+            || contadorPiezasRivalArriba > 0
+            || contadorPiezasRivalDer > 0
+            || contadorPiezasRivalIzq > 0
+            || contadorPiezasRivalDiagonal_1 > 0
+            || contadorPiezasRivalDiagonal_2 > 0
+            || contadorPiezasRivalDiagona2_1 > 0
+            || contadorPiezasRivalDiagona2_2 > 0) {
+
+        return true;    //Devuelve verdadero, significa que se puede colocar una pieza
+    } else {
+
+        return false; //Devuelve falso no se puede colocar ninguna pieza
+    }
+
+}
 
     
 }

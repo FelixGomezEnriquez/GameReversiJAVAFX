@@ -28,7 +28,9 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         paneRoot.setPadding(new Insets(10));
-        
+        CornerRadii cornerradii=new CornerRadii(15);
+        paneRoot.setBackground(new Background(
+            new BackgroundFill(Color.rgb(179,187,175), cornerradii, Insets.EMPTY)));
         
         
         Reversi reversi=new Reversi();
@@ -40,15 +42,12 @@ public class App extends Application {
         PanelPuntos puntos=new PanelPuntos();
         PanelMensajes mensajes=new PanelMensajes();
         
-        CornerRadii cornerradii=new CornerRadii(15);
-        paneRoot.setBackground(new Background(
-            new BackgroundFill(Color.rgb(179,187,175), cornerradii, Insets.EMPTY)));
+                
+        paneRoot.setCenter(tablero);
         
         //para quitar que te diga por rastreo tantas veces lo mismo hacer metodo comprobar
         //posicion escogida sin verbose y llamar a ese metodo en reversi.movposibles 
         //y en tablero.compruebacondiciones
-        
-        paneRoot.setCenter(tablero);
         
         paneRoot.setLeft(puntos);
         

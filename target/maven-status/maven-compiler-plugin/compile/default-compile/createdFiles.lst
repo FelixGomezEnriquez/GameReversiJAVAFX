@@ -1,2 +1,7 @@
+es\felixgomezenriquez\reversi\Reversi.class
 module-info.class
 es\felixgomezenriquez\reversi\App.class
+es\felixgomezenriquez\reversi\PanelPuntos.class
+es\felixgomezenriquez\reversi\Tablero.class
+es\felixgomezenriquez\reversi\PanelMensajes.class
+es\felixgomezenriquez\reversi\Ficha.class

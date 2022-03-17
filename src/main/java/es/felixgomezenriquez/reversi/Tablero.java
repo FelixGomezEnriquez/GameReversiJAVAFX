@@ -107,8 +107,7 @@ public class Tablero extends Pane{
             System.out.println("El turno es de: "+ reversi.turnoJugador);
             
             this.quienGana();
-
-            
+                        
             if (reversi.turnoJugador == Reversi.JUGADOR1
                     && reversi.colocarFicha(columna, fila, Reversi.JUGADOR1)) { 
                 
@@ -283,31 +282,39 @@ public class Tablero extends Pane{
 
     
     public void quienGana(){
-        
-        switch (reversi.victoria()) {
-            case 'N':
-                System.out.println("HA ganado NEGRO");
-                PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS NEGRAS");
-                
-                break;
-            case 'B':
-                System.out.println("HA ganado Blanco");
-                PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS BLANCAS");
-                break;
-            case 'H':
-                PanelMensajes.mostrarMensaje("Negras sin movimientos, pasan turno a las blancas");
-                reversi.turnoJugador=Reversi.JUGADOR1;
-                break;
-            case 'U':
-                PanelMensajes.mostrarMensaje("Blancas sin movimientos, pasan turno a las negras");
-                reversi.turnoJugador=Reversi.JUGADOR2;
-        
-                break;
-                
-            default:
-                System.out.println("No ha ganado nadie");
-                break;
-        }
+        Timeline quienGana = new Timeline(
+        new KeyFrame(Duration.seconds(2), (ActionEvent ae) -> {
+         
+            switch (reversi.victoria()) {
+                case 'N':
+                    System.out.println("HA ganado NEGRO");
+                    PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS NEGRAS");
+
+                    break;
+                case 'B':
+                    System.out.println("HA ganado Blanco");
+                    PanelMensajes.mostrarMensaje("HA GANADO EL JUGADOR CON LAS PIEZAS BLANCAS");
+                    break;
+                case 'H':
+                    PanelMensajes.mostrarMensaje("Negras sin movimientos, pasan turno a las blancas");
+                    reversi.turnoJugador=Reversi.JUGADOR1;
+                    break;
+                case 'U':
+                    PanelMensajes.mostrarMensaje("Blancas sin movimientos, pasan turno a las negras");
+                    reversi.turnoJugador=Reversi.JUGADOR2;
+
+                    break;
+
+                default:
+                    System.out.println("No ha ganado nadie");
+                    break;
+            }
+
+        }));
+        quienGana.setCycleCount(Timeline.INDEFINITE);
+        quienGana.play();
+
+
     
     }
     

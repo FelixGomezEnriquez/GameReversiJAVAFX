@@ -550,10 +550,7 @@ public class Reversi {
         
         boolean movJugadorBlanco=this.movPosibles(Reversi.JUGADOR1);
         boolean movJugadorNegro=this.movPosibles(Reversi.JUGADOR2);
-        
-        System.out.println("VALOR LOGICO MOV JUGADOR BLANCO METODO VICTORIA"+ movJugadorBlanco);
-        System.out.println("VALOR LOGICO MOV JUGADOR NEGRO METODO VICTORIA"+ movJugadorNegro);
-        
+                
         if (movJugadorBlanco== false && 
                 movJugadorNegro==false &&
                 Tablero.numFichasBlancas>Tablero.numFichasNegras){

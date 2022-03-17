@@ -28,11 +28,11 @@ public class PanelMensajes extends StackPane{
         
         this.setPadding(new Insets(20));
         this.setBackground(new Background(
-            new BackgroundFill(Color.FORESTGREEN, cornerradii, Insets.EMPTY)));
+            new BackgroundFill(Color.GAINSBORO, cornerradii, Insets.EMPTY)));
         this.setMinHeight(100);
         this.setMaxHeight(200);
         this.getChildren().add(labelMensaje);
-        labelMensaje.setFont(new Font("Arial", 15));
+        labelMensaje.setFont(new Font("Arial", 22));
         labelMensaje.setText("Aqui apareceran mensajes de ayuda");
     }
     

@@ -3,7 +3,11 @@ package es.felixgomezenriquez.reversi;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -36,7 +40,9 @@ public class App extends Application {
         PanelPuntos puntos=new PanelPuntos();
         PanelMensajes mensajes=new PanelMensajes();
         
-                
+        CornerRadii cornerradii=new CornerRadii(15);
+        paneRoot.setBackground(new Background(
+            new BackgroundFill(Color.rgb(179,187,175), cornerradii, Insets.EMPTY)));
         paneRoot.setCenter(tablero);
         
         paneRoot.setLeft(puntos);

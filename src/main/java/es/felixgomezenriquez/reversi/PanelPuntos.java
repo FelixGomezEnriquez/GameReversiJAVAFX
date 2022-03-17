@@ -32,14 +32,16 @@ public class PanelPuntos extends StackPane{
     
     public PanelPuntos (){
         
+        
 
         this.setAlignment(Pos.CENTER);
         
         CornerRadii cornerradii=new CornerRadii(50);
         
         this.setBackground(new Background(
-            new BackgroundFill(Color.FORESTGREEN, cornerradii, Insets.EMPTY)));
-        
+            new BackgroundFill(Color.GAINSBORO, cornerradii, Insets.EMPTY)));
+       
+
         this.setPadding(new Insets(20));
         
         VBox puntos =new VBox();
@@ -58,8 +60,8 @@ public class PanelPuntos extends StackPane{
         
         fichasBlancas.setText("Blancas: 0");
         fichasBlancas.setFont(Font.font(15));
-        fichasBlancas.setFill(Color.DARKCYAN);
-        
+        fichasBlancas.setFill(Color.rgb(219, 123, 0));
+        //219, 123, 0 naranja
 
         //Anadimos los textos al layout
         puntos.getChildren().add(fichasBlancas);
@@ -67,7 +69,7 @@ public class PanelPuntos extends StackPane{
         
         fichasNegras.setText("Negras: 0");
         fichasNegras.setFont(Font.font(15));
-        fichasNegras.setFill(Color.DARKCYAN);
+        fichasNegras.setFill(Color.rgb(219, 123, 0));
         
         
         //Anadimos los textos al layout

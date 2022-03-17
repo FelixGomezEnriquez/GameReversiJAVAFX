@@ -296,6 +296,11 @@ public class Tablero extends Pane{
     
     public void compruebaCondiciones(){
     
+        System.out.println("tiene el blanco "
+                + "movimientos posibles?"+ reversi.movPosibles(Reversi.JUGADOR1));
+        
+        System.out.println("tiene el negro "
+                + "movimientos posibles?"+ reversi.movPosibles(Reversi.JUGADOR2));
         if(reversi.movPosibles(Reversi.JUGADOR1)==true &&
                 reversi.movPosibles(Reversi.JUGADOR2)==false){
             PanelMensajes.mostrarMensaje("Las negras no tienen movimientos posibles, pasan turno");

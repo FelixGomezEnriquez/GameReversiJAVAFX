@@ -553,11 +553,11 @@ public class Reversi {
                 
         if (movJugadorBlanco== false && 
                 movJugadorNegro==false &&
-                Tablero.numFichasBlancas>Tablero.numFichasNegras){
+                PanelPuntos.numFichasBlancas>PanelPuntos.numFichasNegras){
             return 'B';
         }else if (movJugadorBlanco== false && 
                 movJugadorNegro==false &&
-                Tablero.numFichasBlancas<Tablero.numFichasNegras){
+                PanelPuntos.numFichasBlancas<PanelPuntos.numFichasNegras){
             return 'N';
         }else if (movJugadorBlanco==true && movJugadorNegro==false){
             return 'H';

@@ -17,36 +17,31 @@ import javafx.scene.text.Font;
 
 /**
  *
- * @author usuario
+ * @author Felix
  */
-public class PanelMensajes extends StackPane{
+//Esta clase extiende de StackPane
+public class PanelMensajes extends StackPane {
 
+    //Se hace estatico para poder utilizarlo en el metodo mostrarMensaje
     static Label labelMensaje = new Label();
-    
-    public PanelMensajes(){
-        
-        CornerRadii cornerradii=new CornerRadii(50);
-        
+
+    public PanelMensajes() {
+
+        //Creamos objeto CornerRadi para usarlo en el backgroung
+        CornerRadii cornerradii = new CornerRadii(50);
+
         this.setPadding(new Insets(20));
         this.setBackground(new Background(
-            new BackgroundFill(Color.GAINSBORO, cornerradii, Insets.EMPTY)));
+                new BackgroundFill(Color.GAINSBORO, cornerradii, Insets.EMPTY)));
         this.setMinHeight(100);
         this.setMaxHeight(200);
         this.getChildren().add(labelMensaje);
         labelMensaje.setFont(new Font("Arial", 22));
         labelMensaje.setText("Primer turno de blancas");
     }
-    
+
     public static void mostrarMensaje(String mensaje) {
         labelMensaje.setText(mensaje);
     }
-     
-    
-    
 
-  
-    
 }
-
-
-    

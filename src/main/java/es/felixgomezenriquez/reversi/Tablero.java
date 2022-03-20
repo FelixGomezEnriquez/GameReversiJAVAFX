@@ -37,8 +37,7 @@ public class Tablero extends Pane{
     final int COLUMNAINICIAL4=4;
     final int FILAINICIAL4=4;
     
-    static int numFichasBlancas;
-    static int numFichasNegras;
+    
     
     public Tablero( Reversi reversi){
         
@@ -120,7 +119,7 @@ public class Tablero extends Pane{
 
                 reversi.cambiarTurnoJugador();
                 
-                renovarPuntos();
+                PanelPuntos.renovarPuntos();
 
                 
                 reversi.mostrarTablero();
@@ -139,7 +138,7 @@ public class Tablero extends Pane{
                 //Muestra por pantalla el turno del siguiente jugador
                 PanelMensajes.mostrarMensaje("Es turno de las piezas blancas");
                 
-                this.renovarPuntos();
+                PanelPuntos.renovarPuntos();
                 reversi.mostrarTablero();
             } else{
                 PanelMensajes.mostrarMensaje("Movimiento inválido");
@@ -266,19 +265,7 @@ public class Tablero extends Pane{
     }
     
     
-    public void renovarPuntos(){
-        
-        //Uso variable que contenga el resultado de el metodo cambiar puntuacion
-        // para usar ese resultado en la logica y ver quien gana
-                
-        numFichasBlancas=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1,reversi);
-        PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);
-        
-        numFichasNegras=PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR2,reversi);
-        PanelPuntos.fichasNegras.setText("Negras: " + numFichasNegras);
     
-        
-    }
 
     
     public void quienGana(){

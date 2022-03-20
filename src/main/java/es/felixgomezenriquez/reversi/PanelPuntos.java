@@ -100,7 +100,9 @@ public class PanelPuntos extends StackPane {
 //Este metodo renueva los puntos tanto de las pieza blancas como negras
     public static void renovarPuntos() {
 
-        //Uso la variable numFichasBlancas para guardar el resultado de              
+        //Uso la variable numFichasBlancas para guardar el resultado de el metodo 
+        //cambiar puntuacion.
+        
         numFichasBlancas = PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1, reversi);
 
         PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);

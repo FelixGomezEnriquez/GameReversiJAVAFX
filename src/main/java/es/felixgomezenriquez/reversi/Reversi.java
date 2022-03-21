@@ -831,7 +831,6 @@ public class Reversi {
 
     }
 
-    
 //Este metodo resetea la logica del juego.
     public void resetLogica() {
 

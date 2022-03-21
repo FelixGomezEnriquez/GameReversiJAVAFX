@@ -102,7 +102,6 @@ public class PanelPuntos extends StackPane {
 
         //Uso la variable numFichasBlancas para guardar el resultado de el metodo 
         //cambiar puntuacion.
-        
         numFichasBlancas = PanelPuntos.cambiarPuntuacion(Reversi.JUGADOR1, reversi);
 
         PanelPuntos.fichasBlancas.setText("Blancas: " + numFichasBlancas);

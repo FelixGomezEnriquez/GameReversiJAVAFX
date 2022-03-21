@@ -33,15 +33,14 @@ public class Tablero extends Pane {
     final int FILA_INICIAL_3 = 4;
     final int COLUMNA_INICIAL_4 = 4;
     final int FILA_INICIAL_4 = 4;
-    
 
     public Tablero(Reversi reversi) {
 
         this.reversi = reversi;
         this.setBackground(new Background(
                 new BackgroundFill(Color.FORESTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-        final double TAM_PANTALLA_X= Ficha.TAM_FICHA* reversi.TAM_X_TABLERO;
-        final double TAM_PANTALLA_Y= Ficha.TAM_FICHA* reversi.TAM_Y_TABLERO;
+        final double TAM_PANTALLA_X = Ficha.TAM_FICHA * reversi.TAM_X_TABLERO;
+        final double TAM_PANTALLA_Y = Ficha.TAM_FICHA * reversi.TAM_Y_TABLERO;
 
         this.setMinWidth(TAM_PANTALLA_X);
         this.setMinHeight(TAM_PANTALLA_Y);
@@ -141,7 +140,6 @@ public class Tablero extends Pane {
         });
     }
 
-    
     //Este metodo crea las fichas del jugador que corresponda 
     //en las posiciones correspondientes, dependiendo de el numero 
     //de piezas del rival en las distintas direcciones
@@ -149,14 +147,12 @@ public class Tablero extends Pane {
 
 //Todas las siguientes sentecias if funcionan de forma similar, por eso solo 
 //explicare el caso del primer if
-        
         //Si el numero de piezas del rival a la izquierda es mayor que 0  y la posicion
         // con la variable (posXFinalIzq) que controla lo que hay 1 posicion mas para
         //saber que hay mas alla de la suma de las piezas rivales, es decir saber si 
         //en esa posicion hay una pieza aliada.
         //EJEMPLO:  posXFinalIzq = columna - contadorPiezasRivalIzq-1 
         //se ejecutan las sentencias pertinentes que manipulan las fichas
-
         if (reversi.contadorPiezasRivalIzq > 0
                 && reversi.tablero[reversi.posXFinalIzq][fila] == jugador) {
             System.out.println("colocando fichas de forma grafica a la izquierda");
@@ -299,10 +295,10 @@ public class Tablero extends Pane {
                             reversi.turnoJugador = Reversi.JUGADOR2;
 
                             break;
-                            
+
                         case 'E':
                             PanelMensajes.mostrarMensaje("EMPATE!!");
-                            
+
                         default:
                             System.out.println("No ha ganado nadie");
                             break;

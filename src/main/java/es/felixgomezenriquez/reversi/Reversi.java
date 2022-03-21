@@ -9,11 +9,13 @@ package es.felixgomezenriquez.reversi;
  *
  * @author usuario
  */
+//Esta clase es la encargada de almacenar toda la logica del juego, por tanto es 
+//la mas extensa y compleja.
 public class Reversi {
 
     //Variables tamaño del tablero y inicializacion del array bidimensional
-    int tamXTablero;
-    int tamYTablero;
+    final int TAM_X_TABLERO;
+    final int TAM_Y_TABLERO;
     char[][] tablero;
 
     //Inicializacion de constantes y variables de jugadores y control del turno
@@ -22,10 +24,9 @@ public class Reversi {
     final char VACIO = '.';
     char turnoJugador = JUGADOR1;
     //Variables que controlan si tiene movimientos posibles o no 
-    
+
 //    boolean movJugadorBlanco;
 //    boolean movJugadorNegro;
-
     //Variables que almacenan la cantidad de piezas del rival que hay entre 2 piezas aliadas
     int contadorPiezasRivalAbajo;
     int contadorPiezasRivalArriba;
@@ -36,12 +37,10 @@ public class Reversi {
     int contadorPiezasRivalDiagona2_1;
     int contadorPiezasRivalDiagona2_2;
 
-    
 //Variables que controlan lo que hay 1 posicion mas o una posicion menos para
 //saber que hay mas alla de la suma de las piezas rivales, es decir saber si 
 //en esa posicion hay una pieza aliada
 //EJEMPLO:  tablero[posXFinalIzq][fila]= tablero[columna- contadorPiezasRivalIzq-1][fila] 
-    
     int posXFinalIzq;
     int posXFinalDer;
     int posYFinalAbajo;
@@ -55,18 +54,18 @@ public class Reversi {
     int posXFinalD2_2;
     int posYFinalD2_2;
 
+//Metodo constructor que crea un objeto Reversi
     public Reversi() {
-        
 
 //Le damos un valor a las siguientes variables para la posterior creacion del array
-        tamXTablero = 8;
-        tamYTablero = 8;
+        TAM_X_TABLERO = 8;
+        TAM_Y_TABLERO = 8;
 //Creamos el array bidimensional con los tamaños dados por las variables y usamos
 //un for para hacerlo
 
-        tablero = new char[tamXTablero][tamYTablero];
-        for (int x = 0; x < tamXTablero; x++) {
-            for (int y = 0; y < tamYTablero; y++) {
+        tablero = new char[TAM_X_TABLERO][TAM_Y_TABLERO];
+        for (int x = 0; x < TAM_X_TABLERO; x++) {
+            for (int y = 0; y < TAM_Y_TABLERO; y++) {
                 tablero[x][y] = VACIO;
             }
         }
@@ -79,14 +78,12 @@ public class Reversi {
     }
 
     public void mostrarTablero() {
-        
-        
+
 //Este metodo se encarga de mostrar el array bidimensional en forma de tablero
 //segun este for por cada iteracion de y hace 7 iteraciones de x, en cada iteracion
 //de y hace un System.out.println(); para darle un salto de linea y darle la forma de tablero
-
-        for (int y = 0; y < tamYTablero; y++) {
-            for (int x = 0; x < tamXTablero; x++) {
+        for (int y = 0; y < TAM_Y_TABLERO; y++) {
+            for (int x = 0; x < TAM_X_TABLERO; x++) {
                 System.out.print(tablero[x][y]);
             }
             System.out.println();
@@ -95,27 +92,33 @@ public class Reversi {
 
     }
 
-    public boolean colocarFicha(int columna, int fila, char jugador) {
-
 //Este metodo se encarga de colocar las fichas en el array dependiendo del resultado del
 //metodo comprobarPosicionEscogida que devuelve un boolean
+    public boolean colocarFicha(int columna, int fila, char jugador) {
 
+        //esta variable cambia su valor cuando se puede colocar cualquier ficha
         boolean seHaColocado = false;
-        
+
         if (this.comprobarPosicionEscogida(columna, fila, jugador) == true) {
             System.out.println("colocando ficha: " + jugador);
 
             //Le damos valor a la variable inicializada arriba
-            
             posXFinalIzq = columna - contadorPiezasRivalIzq - 1;
 
             //Comprobamos que el valor no pasa las dimensiones del array
-            //---------------------COMENTANDO POR AQUIIIIIIII------------------
             if (posXFinalIzq <= 0) {
                 posXFinalIzq = 0;
             }
 
-            
+//Todas las siguientes sentecias if funcionan de forma similar, por eso solo 
+//explicare el caso del primer if
+            //Si el numero de piezas del rival a la izquierda es mayor que 0  y la posicion
+            // con la variable (posXFinalIzq) que controla lo que hay 1 posicion mas para
+            //saber que hay mas alla de la suma de las piezas rivales, es decir saber si 
+            //en esa posicion hay una pieza aliada.
+            //EJEMPLO:  posXFinalIzq = columna - contadorPiezasRivalIzq-1          
+            //se ejecutan las lineas pertinentes que manipulan el array bidimensional
+            //sino se cumple las condiciones manda un mensaje por consola de aviso
             if (this.contadorPiezasRivalIzq > 0
                     && tablero[posXFinalIzq][fila] == jugador) {
 
@@ -321,23 +324,32 @@ public class Reversi {
         }
     }
 
+//Este metodo se ecarga de comprobar la posicion marcada por los parametros columna y fila para
+//un jugador tambien pasado por parametros, devolviendo un boolean dependiendo de si se puede 
+//colocar o no 
     public boolean comprobarPosicionEscogida(int columna, int fila, char jugador) {
-        
-        //Para no poder pinchar en una ficha ya puesta _-------------------------------
-        if(tablero[columna][fila]!=VACIO){
+
+        //este if se encarga de que no puedas poner una posicion en la que ya hay una pieza.
+        if (tablero[columna][fila] != VACIO) {
             return false;
         }
 
-        
+        //Contador de las piezas del rival entre 2 piezas aliadas 
         contadorPiezasRivalIzq = 0;
-        // Recuento a la izquierda
+
+        // Variable encargada almacenar la posicion dentro del bucle cuando comprueba 
+        //hacia la izquierda.
         int posIzq = 1;
-        //Mientras la columna menos la pos sea mayor o igual a 0 y la siguiente posicion sea distinto de vacio
+
+//Todos los bucles tienen sus variables de contador de las piezas y de la posicion para las 
+//comprobaciones,funcionan de forma parecida a si que solo explicare el primero
+        //Mientras la columna menos la posision sea mayor o igual a 0 y la siguiente 
+        //posicion sea distinto de vacio
         while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
 
             if (tablero[columna - posIzq][fila] == jugador) {
-                System.out.println("Las piezas del rival a la izquierda hasta el jugador "+ 
-                        jugador + " son:" + contadorPiezasRivalIzq);
+                System.out.println("Las piezas del rival a la izquierda hasta el jugador "
+                        + jugador + " son: " + contadorPiezasRivalIzq);
 
                 break;
             } else {
@@ -347,15 +359,15 @@ public class Reversi {
 
         }
 
-        System.out.println("Las piezas del rival a la izquierdo son:" + contadorPiezasRivalIzq);
+        System.out.println("Las piezas del rival a la izquierda son:" + contadorPiezasRivalIzq);
 
         contadorPiezasRivalDer = 0;
         int posDer = 1;
-        while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
+        while (columna + posDer < TAM_X_TABLERO && tablero[columna + posDer][fila] != VACIO) {
 
             if (tablero[columna + posDer][fila] == jugador) {
-                System.out.println("Las piezas del rival a la derecha hasta el jugador:" + 
-                        jugador + " son:" + contadorPiezasRivalDer);
+                System.out.println("Las piezas del rival a la derecha hasta el jugador: "
+                        + jugador + " son: " + contadorPiezasRivalDer);
                 break;
             } else {
                 contadorPiezasRivalDer++;
@@ -363,15 +375,15 @@ public class Reversi {
             posDer++;
         }
 
-        System.out.println("Las piezas del rival a la derecha son:" + contadorPiezasRivalDer);
+        System.out.println("Las piezas del rival a la derecha son: " + contadorPiezasRivalDer);
 
         contadorPiezasRivalArriba = 0;
         int posArr = 1;
         while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
-            
+
             if (tablero[columna][fila - posArr] == jugador) {
-                System.out.println("Las piezas del rival  hacia arrriba hasta jugador:" + 
-                        jugador + " son:" + contadorPiezasRivalArriba);
+                System.out.println("Las piezas del rival  hacia arriba hasta jugador: "
+                        + jugador + " son: " + contadorPiezasRivalArriba);
 
                 break;
             } else {
@@ -380,15 +392,15 @@ public class Reversi {
             posArr++;
         }
 
-        System.out.println("Las piezas del rival a hacia arriba son:" + contadorPiezasRivalArriba);
+        System.out.println("Las piezas del rival a hacia arriba son: " + contadorPiezasRivalArriba);
 
         contadorPiezasRivalAbajo = 0;
         int posAba = 1;
-        while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
+        while (fila + posAba < TAM_Y_TABLERO && tablero[columna][fila + posAba] != VACIO) {
 
             if (tablero[columna][fila + posAba] == jugador) {
-                System.out.println("Las piezas del rival hacia abajo hasta jugador " + 
-                        jugador + " son:" + contadorPiezasRivalAbajo);
+                System.out.println("Las piezas del rival hacia abajo hasta jugador "
+                        + jugador + " son: " + contadorPiezasRivalAbajo);
                 break;
             } else {
                 contadorPiezasRivalAbajo++;
@@ -396,16 +408,17 @@ public class Reversi {
             posAba++;
         }
 
-        System.out.println("Las piezas del rival a hacia abajo son:" + contadorPiezasRivalAbajo);
+        System.out.println("Las piezas del rival a hacia abajo son: " + contadorPiezasRivalAbajo);
 
         contadorPiezasRivalDiagonal_1 = 0;
         int posD1_1 = 1;
 
-        while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
+        while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0
+                && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
 
             if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
-                System.out.println("Las piezas del rival diagonal 1_1 hasta jugador " +
-                        jugador + " son:" + contadorPiezasRivalDiagonal_1);
+                System.out.println("Las piezas del rival diagonal 1_1 hasta jugador "
+                        + jugador + " son:" + contadorPiezasRivalDiagonal_1);
                 break;
             } else {
                 contadorPiezasRivalDiagonal_1++;
@@ -413,9 +426,9 @@ public class Reversi {
             posD1_1++;
         }
 
-        System.out.println("Las piezas del rival a diagonal 1_1 son:" + contadorPiezasRivalDiagonal_1);
+        System.out.println("Las piezas del rival a diagonal 1_1 son: " + contadorPiezasRivalDiagonal_1);
 
-        /*      /
+        /*      
                 /
                     /   
                         /
@@ -424,10 +437,12 @@ public class Reversi {
         contadorPiezasRivalDiagonal_2 = 0;
         int posD1_2 = 1;
 
-        while (fila + posD1_2 < 8 && columna + posD1_2 < 8 && tablero[columna + posD1_2][fila + posD1_2] != VACIO) {
+        while (fila + posD1_2 < TAM_Y_TABLERO && columna + posD1_2 < TAM_X_TABLERO
+                && tablero[columna + posD1_2][fila + posD1_2] != VACIO) {
 
             if (tablero[columna + posD1_2][fila + posD1_2] == jugador) {
-                System.out.println("Las piezas del rival diagonal 1_2 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagonal_2);
+                System.out.println("Las piezas del rival diagonal 1_2 hasta jugador "
+                        + jugador + " son:" + contadorPiezasRivalDiagonal_2);
                 break;
             } else {
                 contadorPiezasRivalDiagonal_2++;
@@ -448,12 +463,12 @@ public class Reversi {
         contadorPiezasRivalDiagona2_1 = 0;
         int posD2_1 = 1;
 
-        while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
+        while (fila - posD2_1 >= 0 && columna + posD2_1 < TAM_X_TABLERO
                 && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
 
-
             if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
-                System.out.println("Las piezas del rival diagonal 2_1 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagona2_1);
+                System.out.println("Las piezas del rival diagonal 2_1 hasta jugador "
+                        + jugador + " son:" + contadorPiezasRivalDiagona2_1);
                 break;
             } else {
                 contadorPiezasRivalDiagona2_1++;
@@ -475,11 +490,12 @@ public class Reversi {
         contadorPiezasRivalDiagona2_2 = 0;
         int posD2_2 = 1;
 
-        while (fila + posD2_2 <= 7 && columna - posD2_2 >= 0
+        while (fila + posD2_2 < TAM_Y_TABLERO && columna - posD2_2 >= 0
                 && tablero[columna - posD2_2][fila + posD2_2] != VACIO) {
 
             if (tablero[columna - posD2_2][fila + posD2_2] == jugador) {
-                System.out.println("Las piezas del rival diagonal 2_2 hasta jugador " + jugador + " son:" + contadorPiezasRivalDiagona2_2);
+                System.out.println("Las piezas del rival diagonal 2_2 hasta jugador "
+                        + jugador + " son:" + contadorPiezasRivalDiagona2_2);
                 break;
             } else {
                 contadorPiezasRivalDiagona2_2++;
@@ -500,7 +516,6 @@ public class Reversi {
                 Hacia abajo
 
          */
-        
         if (contadorPiezasRivalAbajo > 0
                 || contadorPiezasRivalArriba > 0
                 || contadorPiezasRivalDer > 0
@@ -518,6 +533,7 @@ public class Reversi {
 
     }
 
+//Este metodo se encarga de cambiar el turno del jugador
     public char cambiarTurnoJugador() {
 
         if (turnoJugador == JUGADOR1) {
@@ -529,57 +545,59 @@ public class Reversi {
         }
     }
 
-        
-    public boolean movPosibles(char jugador){
-        
-        int movPosibles=0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(tablero[i][j]==VACIO && comprobarPosicionEscogidaSinConsola(i, j,jugador)==true){
+//este metodo recorre el array y hace un recuento de todos los movimientos posibles
+//para el jugador que reciba por parametros, y devuelve si tiene movimientos posibles 
+//o no
+    public boolean movPosibles(char jugador) {
+
+        int movPosibles = 0;
+        for (int i = 0; i < TAM_X_TABLERO; i++) {
+            for (int j = 0; j < TAM_Y_TABLERO; j++) {
+                if (tablero[i][j] == VACIO
+                        && comprobarPosicionEscogidaSinConsola(i, j, jugador) == true) {
                     movPosibles++;
- 
                 }
             }
-            
         }
-        return movPosibles>0;
+        return movPosibles > 0;
     }
-    
-    
-    public char victoria (){
-        
-        boolean movJugadorBlanco=this.movPosibles(Reversi.JUGADOR1);
-        boolean movJugadorNegro=this.movPosibles(Reversi.JUGADOR2);
-                
-        if (movJugadorBlanco== false && 
-                movJugadorNegro==false &&
-                PanelPuntos.numFichasBlancas>PanelPuntos.numFichasNegras){
+
+//Este metodo comprueba las condiciones segun si tiene movimientos los jugadores o no 
+    public char comprobarCondiciones() {
+
+        boolean movJugadorBlanco = this.movPosibles(Reversi.JUGADOR1);
+        boolean movJugadorNegro = this.movPosibles(Reversi.JUGADOR2);
+
+        if (movJugadorBlanco == false
+                && movJugadorNegro == false
+                && PanelPuntos.numFichasBlancas > PanelPuntos.numFichasNegras) {
             return 'B';
-        }else if (movJugadorBlanco== false && 
-                movJugadorNegro==false &&
-                PanelPuntos.numFichasBlancas<PanelPuntos.numFichasNegras){
+        } else if (movJugadorBlanco == false
+                && movJugadorNegro == false
+                && PanelPuntos.numFichasBlancas < PanelPuntos.numFichasNegras) {
             return 'N';
-        }else if (movJugadorBlanco==true && movJugadorNegro==false){
+        } else if (movJugadorBlanco == true && movJugadorNegro == false) {
             return 'H';
-        }else if (movJugadorBlanco ==false && movJugadorNegro==true){
+        } else if (movJugadorBlanco == false && movJugadorNegro == true) {
             return 'U';
-        }else{
+        } else if (movJugadorBlanco == false
+                && movJugadorNegro == false
+                && PanelPuntos.numFichasBlancas == PanelPuntos.numFichasNegras) {
+            return 'E';
+        } else {
             return '.';
         }
     }
-    
 
-
-    public boolean comprobarPosicionEscogidaSinConsola(int columna, int fila, char jugador) 
-    {
-
+//Este metodo ahce lo mismo que el comprobar posicion escogida pero sin mostrar mensajes
+//por consola.
+    public boolean comprobarPosicionEscogidaSinConsola(int columna, int fila, char jugador) {
 
         //Para no poder pinchar en una ficha ya puesta _-------------------------------
-        if(tablero[columna][fila]!=VACIO){
+        if (tablero[columna][fila] != VACIO) {
             return false;
         }
 
-        
         contadorPiezasRivalIzq = 0;
         // Recuento a la izquierda
         int posIzq = 1;
@@ -587,7 +605,6 @@ public class Reversi {
         while (columna - posIzq >= 0 && tablero[columna - posIzq][fila] != VACIO) {
 
             if (tablero[columna - posIzq][fila] == jugador) {
-                
 
                 break;
             } else {
@@ -597,13 +614,12 @@ public class Reversi {
 
         }
 
-
         contadorPiezasRivalDer = 0;
         int posDer = 1;
         while (columna + posDer < 8 && tablero[columna + posDer][fila] != VACIO) {
 
             if (tablero[columna + posDer][fila] == jugador) {
-                
+
                 break;
             } else {
                 contadorPiezasRivalDer++;
@@ -611,13 +627,11 @@ public class Reversi {
             posDer++;
         }
 
-
         contadorPiezasRivalArriba = 0;
         int posArr = 1;
         while (fila - posArr >= 0 && tablero[columna][fila - posArr] != VACIO) {
-            
+
             if (tablero[columna][fila - posArr] == jugador) {
-                
 
                 break;
             } else {
@@ -626,13 +640,12 @@ public class Reversi {
             posArr++;
         }
 
-
         contadorPiezasRivalAbajo = 0;
         int posAba = 1;
         while (fila + posAba < 8 && tablero[columna][fila + posAba] != VACIO) {
 
             if (tablero[columna][fila + posAba] == jugador) {
-              
+
                 break;
             } else {
                 contadorPiezasRivalAbajo++;
@@ -640,14 +653,13 @@ public class Reversi {
             posAba++;
         }
 
-
         contadorPiezasRivalDiagonal_1 = 0;
         int posD1_1 = 1;
 
         while (fila - posD1_1 >= 0 && columna - posD1_1 >= 0 && tablero[columna - posD1_1][fila - posD1_1] != VACIO) {
 
             if (tablero[columna - posD1_1][fila - posD1_1] == jugador) {
-               
+
                 break;
             } else {
                 contadorPiezasRivalDiagonal_1++;
@@ -689,7 +701,6 @@ public class Reversi {
 
         while (fila - posD2_1 >= 0 && columna + posD2_1 < 8
                 && tablero[columna + posD2_1][fila - posD2_1] != VACIO) {
-
 
             if (tablero[columna + posD2_1][fila - posD2_1] == jugador) {
                 break;
@@ -735,99 +746,78 @@ public class Reversi {
                 Hacia abajo
 
          */
-        
-        
-        
         posXFinalIzq = columna - contadorPiezasRivalIzq - 1;
-        
-         if (posXFinalIzq <= 0) {
-                posXFinalIzq = 0;
-            }
 
-            
+        if (posXFinalIzq <= 0) {
+            posXFinalIzq = 0;
+        }
 
- 
-            posXFinalDer = columna + contadorPiezasRivalDer + 1;
+        posXFinalDer = columna + contadorPiezasRivalDer + 1;
 
-            if (posXFinalDer >= 7) {
-                posXFinalDer = 7;
-            }
+        if (posXFinalDer >= 7) {
+            posXFinalDer = 7;
+        }
 
-                   
+        posYFinalAbajo = fila + contadorPiezasRivalAbajo + 1;
 
-            posYFinalAbajo = fila + contadorPiezasRivalAbajo + 1;
+        if (posYFinalAbajo >= 7) {
+            posYFinalAbajo = 7;
+        }
 
-            if (posYFinalAbajo >= 7) {
-                posYFinalAbajo = 7;
-            }
+        posYFinalArriba = fila - contadorPiezasRivalArriba - 1;
 
+        if (posYFinalArriba <= 0) {
+            posYFinalArriba = 0;
+        }
 
-            posYFinalArriba = fila - contadorPiezasRivalArriba - 1;
+        posXFinalD1_1 = columna - contadorPiezasRivalDiagonal_1 - 1;
+        posYFinalD1_1 = fila - contadorPiezasRivalDiagonal_1 - 1;
 
-            if (posYFinalArriba <= 0) {
-                posYFinalArriba = 0;
-            }
+        if (posXFinalD1_1 <= 0) {
+            posXFinalD1_1 = 0;
+        }
 
-            
+        if (posYFinalD1_1 <= 0) {
+            posYFinalD1_1 = 0;
+        }
 
-            posXFinalD1_1 = columna - contadorPiezasRivalDiagonal_1 - 1;
-            posYFinalD1_1 = fila - contadorPiezasRivalDiagonal_1 - 1;
+        posXFinalD1_2 = columna + contadorPiezasRivalDiagonal_2 + 1;
+        posYFinalD1_2 = fila + contadorPiezasRivalDiagonal_2 + 1;
 
-            if (posXFinalD1_1 <= 0) {
-                posXFinalD1_1 = 0;
-            }
+        if (posXFinalD1_2 >= 7) {
+            posXFinalD1_2 = 7;
+        }
 
-            if (posYFinalD1_1 <= 0) {
-                posYFinalD1_1 = 0;
-            }
+        if (posYFinalD1_2 >= 7) {
+            posYFinalD1_2 = 7;
+        }
 
-           
-            posXFinalD1_2 = columna + contadorPiezasRivalDiagonal_2 + 1;
-            posYFinalD1_2 = fila + contadorPiezasRivalDiagonal_2 + 1;
+        posXFinalD2_1 = columna + contadorPiezasRivalDiagona2_1 + 1;
+        posYFinalD2_1 = fila - contadorPiezasRivalDiagona2_1 - 1;
 
-            if (posXFinalD1_2 >= 7) {
-                posXFinalD1_2 = 7;
-            }
+        if (posXFinalD2_1 >= 7) {
+            posXFinalD2_1 = 7;
+        }
 
-            if (posYFinalD1_2 >= 7) {
-                posYFinalD1_2 = 7;
-            }
+        if (posYFinalD2_1 <= 0) {
+            posYFinalD2_1 = 0;
+        }
 
-     
+        posXFinalD2_2 = columna - contadorPiezasRivalDiagona2_2 - 1;
+        posYFinalD2_2 = fila + contadorPiezasRivalDiagona2_2 + 1;
 
+        if (posXFinalD2_2 <= 0) {
+            posXFinalD2_2 = 0;
+        }
 
-            posXFinalD2_1 = columna + contadorPiezasRivalDiagona2_1 + 1;
-            posYFinalD2_1 = fila - contadorPiezasRivalDiagona2_1 - 1;
+        if (posYFinalD2_2 >= 7) {
+            posYFinalD2_2 = 7;
+        }
 
-            if (posXFinalD2_1 >= 7) {
-                posXFinalD2_1 = 7;
-            }
-
-            if (posYFinalD2_1 <= 0) {
-                posYFinalD2_1 = 0;
-            }
-
-          
- 
-
-            posXFinalD2_2 = columna - contadorPiezasRivalDiagona2_2 - 1;
-            posYFinalD2_2 = fila + contadorPiezasRivalDiagona2_2 + 1;
-
-            if (posXFinalD2_2 <= 0) {
-                posXFinalD2_2 = 0;
-            }
-
-            if (posYFinalD2_2 >= 7) {
-                posYFinalD2_2 = 7;
-            }
-
-
-        
-        
         if (contadorPiezasRivalAbajo > 0 && tablero[columna][posYFinalAbajo] == jugador
                 || contadorPiezasRivalArriba > 0 && tablero[columna][posYFinalArriba] == jugador
                 || contadorPiezasRivalDer > 0 && tablero[posXFinalDer][fila] == jugador
-                || (contadorPiezasRivalIzq > 0 &&  tablero[posXFinalIzq][fila] == jugador)
+                || (contadorPiezasRivalIzq > 0 && tablero[posXFinalIzq][fila] == jugador)
                 || contadorPiezasRivalDiagonal_1 > 0 && tablero[posXFinalD1_1][posYFinalD1_1] == jugador
                 || contadorPiezasRivalDiagonal_2 > 0 && tablero[posXFinalD1_2][posYFinalD1_2] == jugador
                 || contadorPiezasRivalDiagona2_1 > 0 && tablero[posXFinalD2_1][posYFinalD2_1] == jugador
@@ -838,17 +828,15 @@ public class Reversi {
 
             return false; //Devuelve falso no se puede colocar ninguna pieza
         }
-        
+
     }
+
     
+//Este metodo resetea la logica del juego.
+    public void resetLogica() {
 
-
-
-public void resetLogica(){
-        
-        
-        for (int x = 0; x < tamXTablero; x++) {
-            for (int y = 0; y < tamYTablero; y++) {
+        for (int x = 0; x < TAM_X_TABLERO; x++) {
+            for (int y = 0; y < TAM_Y_TABLERO; y++) {
                 tablero[x][y] = VACIO;
             }
         }
@@ -856,11 +844,9 @@ public void resetLogica(){
         tablero[3][3] = 'B';
         tablero[4][3] = 'N';
         tablero[4][4] = 'B';
-        tablero[3][4] = 'N';        
-        turnoJugador=JUGADOR1;      
-        
-        
-        
+        tablero[3][4] = 'N';
+        turnoJugador = JUGADOR1;
+
     }
-    
+
 }
